@@ -109,10 +109,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-        Joystick XboxController = m_robotContainer.getXboxController1();
-        double LeftJoystickPos = XboxController.getRawAxis(Constants.LeftYAxis);
-        double RightJoystickPos = XboxController.getRawAxis(Constants.RightYAxis);
-        m_robotContainer.m_drivingSubsytem.drive(LeftJoystickPos, RightJoystickPos);
+        m_robotContainer.drive();
+        System.out.println("teleopperiodic");
     }
 
     @Override

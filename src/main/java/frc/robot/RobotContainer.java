@@ -120,6 +120,12 @@ public Joystick getXboxController1() {
     return m_chooser.getSelected();
   }
   
+  public void drive() {
+    Joystick XboxController = getXboxController1();
+    double LeftJoystickPos = XboxController.getRawAxis(Constants.LeftYAxis);
+    double RightJoystickPos = XboxController.getRawAxis(Constants.RightYAxis);
+    m_drivingSubsytem.drive(LeftJoystickPos, RightJoystickPos);
+  }
 
 }
 
