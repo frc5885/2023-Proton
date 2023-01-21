@@ -33,10 +33,8 @@ public class Robot extends TimedRobot {
 
     private RobotContainer m_robotContainer;
 
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
+    // This function is run when the robot is first started up and should be
+    // used for any initialization code.
     @Override
     public void robotInit() {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -61,10 +59,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
     }
 
-
-    /**
-    * This function is called once each time the robot enters Disabled mode.
-    */
+    // This function is called once each time the robot enters Disabled mode.
     @Override
     public void disabledInit() {
     }
@@ -73,9 +68,7 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() {
     }
 
-    /**
-    * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
-    */
+    // This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
     @Override
     public void autonomousInit() {
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
@@ -85,10 +78,8 @@ public class Robot extends TimedRobot {
             m_autonomousCommand.schedule();
         }
     }
-
-    /**
-    * This function is called periodically during autonomous.
-    */
+ 
+    // This function is called periodically during autonomous.
     @Override
     public void autonomousPeriodic() {
     }
@@ -104,13 +95,10 @@ public class Robot extends TimedRobot {
         }
     }
 
-    /**
-     * This function is called periodically during operator control.
-     */
+    // This function is called periodically during operator control.
     @Override
     public void teleopPeriodic() {
         m_robotContainer.drive();
-        System.out.println("teleopperiodic");
     }
 
     @Override
@@ -119,9 +107,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().cancelAll();
     }
 
-    /**
-    * This function is called periodically during test mode.
-    */
+    // This function is called periodically during test mode.
     @Override
     public void testPeriodic() {
     }

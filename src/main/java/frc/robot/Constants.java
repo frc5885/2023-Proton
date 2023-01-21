@@ -33,5 +33,8 @@ public class Constants {
     public static final int Camera2USBPortID = 1;
     public static final int LeftYAxis = 1;
     public static final int RightYAxis = 5;
+    public static final double slowDriveSpeedFactor = .6;   // turbo NOT engaged (0 < speed < turbo)
+    public static final double turboDriveSpeedFactor = 1.0; // turbo engaged, make < 1 for beginner driver
+    public static final double joystickMatchTolerance = 0.9;
 }
 
