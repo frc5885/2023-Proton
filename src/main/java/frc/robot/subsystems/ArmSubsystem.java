@@ -14,6 +14,11 @@ package frc.robot.subsystems;
 
 
 import frc.robot.commands.*;
+
+import java.lang.invoke.CallSite;
+
+import javax.lang.model.util.ElementScanner14;
+
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -28,9 +33,22 @@ public class ArmSubsystem extends SubsystemBase {
    
     public ArmSubsystem() {
         // TODO
-        // armMotorController = new PWMTalonFX(4);
-        // addChild("ArmMotorController",armMotorController);
-        // armMotorController.setInverted(false);
+         armMotorController = new PWMTalonFX(10);
+         addChild("ArmMotorController",armMotorController);
+         armMotorController.setInverted(false);
+        
+    }
+
+    public void ArmUp( ){
+      armMotorController.set(0.5);
+       }
+
+    public void ArmDown( ){
+      armMotorController.set(-0.5);
+    }
+
+    public void Stop() {
+        armMotorController.set(0);
     }
 
     @Override

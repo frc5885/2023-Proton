@@ -124,5 +124,19 @@ private final XboxController xboxController1 = new XboxController(0);
     m_drivingSubsystem.drive(LeftJoystickPos, RightJoystickPos, speedFactor);
   }
 
+  public void Arm() {
+    XboxController controller1 = getXboxController1();
+    double RightTrigger = controller1.getRightTriggerAxis();
+    double LeftTrigger = controller1.getLeftTriggerAxis();
+
+    if(RightTrigger > 0) {
+      m_armSubsystem.ArmUp();
+    } else if(LeftTrigger > 0) {
+      m_armSubsystem.ArmDown();
+    } else {
+      m_armSubsystem.Stop();
+    }
+  }
+
 }
 
