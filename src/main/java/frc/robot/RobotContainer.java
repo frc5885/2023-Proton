@@ -138,5 +138,21 @@ private final XboxController xboxController1 = new XboxController(0);
     }
   }
 
+  public void Gripper() {
+    XboxController controller1 = getXboxController1();
+    boolean RightBumper = controller1.getRightBumper();
+    boolean LeftBumper = controller1.getLeftBumper();    
+    if(RightBumper) {
+      m_gripperSubsystem.toggle();
+
+    if(LeftBumper) {
+      m_gripperSubsystem.toggle2();
+    }
+    }
+
+
+
+    
+  }
 }
 
