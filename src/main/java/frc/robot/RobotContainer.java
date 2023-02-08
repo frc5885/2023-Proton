@@ -62,9 +62,8 @@ private final XboxController m_xboxController1 = new XboxController(0);
     // Configure the button bindings
     configureButtonBindings();
 
-    m_drivingSubsystem.setDefaultCommand(
-      new RunCommand(() -> m_drivingSubsystem.differentialDrive.tankDrive(m_xboxController1.getRawAxis(Constants.LeftYAxis), 
-      m_xboxController1.getRawAxis(Constants.RightYAxis)), m_drivingSubsystem)); 
+    m_drivingSubsystem.setDefaultCommand(new TeleopDriveCommand (m_drivingSubsystem, m_xboxController1));
+
     // SmartDashboard Buttons
     SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
 

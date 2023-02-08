@@ -8,14 +8,12 @@ import frc.robot.Constants;
 public class TeleopDriveCommand extends CommandBase {
 
     private final DrivingSubsystem m_drivingSubsystem;
-    private final Supplier<Double> m_leftSpeedFunction, m_rightSpeedFunction;
-    
+    private final XboxController m_xboxContoller; 
+
      // Called when the command is initially scheduled.
-     public TeleopDriveCommand(DrivingSubsystem drivingSubsystem, Supplier<Double> leftSpeedFunction,
-        Supplier<Double> rightSpeedFunction) {
+    public TeleopDriveCommand(DrivingSubsystem drivingSubsystem, XboxController controller) {
         m_drivingSubsystem = drivingSubsystem;
-        m_leftSpeedFunction = leftSpeedFunction;
-        m_rightSpeedFunction = rightSpeedFunction;
+        m_xboxContoller = controller;
         addRequirements(m_drivingSubsystem);
      }
 
@@ -26,12 +24,10 @@ public class TeleopDriveCommand extends CommandBase {
      // Called every time the scheduler runs while the command is scheduled.
      @Override
      public void execute() {
-        XboxController controller = m_xboxController;
-
-        boolean turboEngaged = controller.getLeftStickButton();
+        boolean turboEngaged = m_xboxContoller.getLeftStickButton();
         double speedFactor = (turboEngaged) ? Constants.turboDriveSpeedFactor : Constants.slowDriveSpeedFactor;
-        double leftJoystickPos = controller.getRawAxis(Constants.LeftYAxis);
-        double rightJoystickPos = controller.getRawAxis(Constants.RightYAxis);
+        double leftJoystickPos = m_xboxContoller.getRawAxis(Constants.LeftYAxis);
+        double rightJoystickPos = m_xboxContoller.getRawAxis(Constants.RightYAxis);
         m_drivingSubsystem.drive(leftJoystickPos, rightJoystickPos, speedFactor);
      }
  
