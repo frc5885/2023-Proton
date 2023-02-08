@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -36,6 +37,8 @@ public class DrivingSubsystem extends SubsystemBase {
     private MotorControllerGroup rightMotorController;
     public DifferentialDrive differentialDrive;
     private AnalogGyro gyroscope;
+    private Encoder m_encoder;
+
 
     public DrivingSubsystem() {
         leftFrontMotor = new WPI_TalonSRX(Constants.LeftFrontMotorID);
@@ -69,6 +72,9 @@ public class DrivingSubsystem extends SubsystemBase {
         gyroscope = new AnalogGyro(1);
         addChild("Gyroscope",gyroscope);
         gyroscope.setSensitivity(0.007);
+
+        m_encoder = new Encoder(Constants.wheelEncoderAChannel, Constants.wheelEncoderBChannel);
+        // todo: we need more code.
     }
 
     @Override
@@ -86,6 +92,11 @@ public class DrivingSubsystem extends SubsystemBase {
     public void drive(double LeftMotorSpeed, double RightMotorSpeed, double speedFactor) {
         differentialDrive.setMaxOutput(speedFactor);
         differentialDrive.tankDrive(LeftMotorSpeed, RightMotorSpeed);
+    }
+
+    public double getEncoderValue() {
+        return (m_encoder.get());
+        //todo: we need more code.
     }
 }
 
