@@ -22,9 +22,11 @@ import java.util.function.DoubleSupplier;
 
 /**
  *
+ // Bob's notes:
+ // TODO: I don't think we need the PIDController, as we are using the internal Talon controller.
+ // - based 2019 bot code for the racks
  */
 public class DriveForwardCommand extends CommandBase {
-
     private final DrivingSubsystem m_DrivingSubsystem;
     private final PIDController m_PIDController;
     
@@ -44,8 +46,8 @@ public class DriveForwardCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double speed = m_PIDController.calculate(m_DrivingSubsystem.getEncoderValue());
-        m_DrivingSubsystem.drive(speed, speed, 1.0);
+     //todo   double speed = m_PIDController.calculate(m_DrivingSubsystem.getEncoderValue());
+    //todo  m_DrivingSubsystem.drive(speed, speed, 1.0);
     }
 
     // Called once the command ends or is interrupted.

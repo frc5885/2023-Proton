@@ -65,9 +65,9 @@ private final XboxController m_xboxController1 = new XboxController(0);
     m_drivingSubsystem.setDefaultCommand(new TeleopDriveCommand (m_drivingSubsystem, m_xboxController1));
 
     // SmartDashboard Buttons
-    SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
+   // SmartDashboard.putData("Autonomous Command", new TankTurnCommand(m_drivingSubsystem));
 
-    m_chooser.setDefaultOption("Autonomous Command", new AutonomousCommand());
+   // m_chooser.setDefaultOption("Autonomous Command", new TankTurnCommand(m_drivingSubsystem));
 
     SmartDashboard.putData("Auto Mode", m_chooser);
   }

@@ -38,6 +38,9 @@ public class Constants {
     public static final double joystickMatchTolerance = 0.9;
     public static final int wheelEncoderAChannel = 1;
     public static final int wheelEncoderBChannel = 2;
+    public static final int wheelEncoderPIDLoopIndex = 0;
+    public static final int wheelEncoderTimeoutMs = 30;
+    public static final int wheelEncoderCountsPerInch = 123345; // todo - set this properly
 
 }
 

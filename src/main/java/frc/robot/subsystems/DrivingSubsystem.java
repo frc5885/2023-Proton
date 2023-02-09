@@ -36,20 +36,33 @@ public class DrivingSubsystem extends SubsystemBase {
     private WPI_TalonSRX rightRearMotor;
     private MotorControllerGroup rightMotorController;
     public DifferentialDrive differentialDrive;
-    private AnalogGyro gyroscope;
-    private Encoder m_encoder;
-
-
+    public AnalogGyro gyroscope;
+  
     public DrivingSubsystem() {
         leftFrontMotor = new WPI_TalonSRX(Constants.LeftFrontMotorID);
         addChild("LeftFrontMotor",leftFrontMotor);
         leftFrontMotor.setInverted(true);
 
+
+        // just guessing which motor we will be using the encoder from
+        // todo: update!
+        leftFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
+            Constants.wheelEncoderPIDLoopIndex, Constants.wheelEncoderTimeoutMs);
+        leftFrontMotor.setSensorPhase(true);
+
+        // todo: set F,K,P,I,D!
+        leftFrontMotor.config_kF(Constants.wheelEncoderPIDLoopIndex,0.0, Constants.wheelEncoderTimeoutMs);
+        leftFrontMotor.config_kP(Constants.wheelEncoderPIDLoopIndex,0.0, Constants.wheelEncoderTimeoutMs);
+        leftFrontMotor.config_kI(Constants.wheelEncoderPIDLoopIndex,0.0, Constants.wheelEncoderTimeoutMs);
+        leftFrontMotor.config_kD(Constants.wheelEncoderPIDLoopIndex,0.0, Constants.wheelEncoderTimeoutMs);
+
+
+
         leftRearMotor = new WPI_TalonSRX(Constants.LeftRearMotorID);
         addChild("LeftRearMotor",leftRearMotor);
         leftRearMotor.setInverted(true);
 
-        leftMotorController = new MotorControllerGroup(leftFrontMotor, leftRearMotor  );
+        leftMotorController = new MotorControllerGroup(leftFrontMotor, leftRearMotor);
         addChild("LeftMotorController",leftMotorController);
 
         rightFrontMotor = new WPI_TalonSRX(Constants.RightFrontMotorID);
@@ -72,9 +85,6 @@ public class DrivingSubsystem extends SubsystemBase {
         gyroscope = new AnalogGyro(1);
         addChild("Gyroscope",gyroscope);
         gyroscope.setSensitivity(0.007);
-
-        m_encoder = new Encoder(Constants.wheelEncoderAChannel, Constants.wheelEncoderBChannel);
-        // todo: we need more code.
     }
 
     @Override
@@ -94,9 +104,8 @@ public class DrivingSubsystem extends SubsystemBase {
         differentialDrive.tankDrive(LeftMotorSpeed, RightMotorSpeed);
     }
 
-    public double getEncoderValue() {
-        return (m_encoder.get());
-        //todo: we need more code.
+    public double getAngle() {
+        return gyroscope.getAngle();
     }
 }
 
