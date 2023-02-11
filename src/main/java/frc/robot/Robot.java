@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
 
     private Command m_autonomousCommand;
     private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0;
-    private ADXRS450_Gyro gyroscope = new ADXRS450_Gyro(kGyroPort);
+    private AnalogGyro gyroscope = new AnalogGyro(0);
     private RobotContainer m_robotContainer;
 
     // This function is run when the robot is first started up and should be
@@ -48,7 +48,8 @@ public class Robot extends TimedRobot {
         // autonomous chooser on the dashboard.
         m_robotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
-        gyroscope.calibrate();
+        //gyroscope.calibrate();
+        gyroscope.setSensitivity(0.0128);
     }
 
     /**
