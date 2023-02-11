@@ -9,14 +9,15 @@ public class TankTurnCommand extends PIDCommand {
     private final DrivingSubsystem m_drivingSubsystem;
 
     public TankTurnCommand(DrivingSubsystem drivingSubsystem, double targetAngle) {
-        super(new PIDController(0.0975, 0.003, -0.02), drivingSubsystem::getAngle,
-        targetAngle, output -> drivingSubsystem.drive(output, -output, 1.0), drivingSubsystem);
+        super(new PIDController(0.02, 0.0, 0.0), drivingSubsystem::getAngle,
+        targetAngle, output -> drivingSubsystem.drive(-output, output, 1.0), drivingSubsystem);
         m_drivingSubsystem = drivingSubsystem;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        System.out.println("Init gyro");
         m_drivingSubsystem.gyroscope.reset();
         super.initialize();
     }
