@@ -17,8 +17,14 @@ import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.DrivingSubsystem;
+import edu.wpi.first.wpilibj.SPI;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,7 +36,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
 
     private Command m_autonomousCommand;
-
+    private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0;
+    private ADXRS450_Gyro gyroscope = new ADXRS450_Gyro(kGyroPort);
     private RobotContainer m_robotContainer;
 
     // This function is run when the robot is first started up and should be
@@ -41,6 +48,7 @@ public class Robot extends TimedRobot {
         // autonomous chooser on the dashboard.
         m_robotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
+        gyroscope.calibrate();
     }
 
     /**
@@ -77,11 +85,14 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
         }
+        gyroscope.reset();
     }
  
     // This function is called periodically during autonomous.
     @Override
     public void autonomousPeriodic() {
+        SmartDashboard.putNumber("Gyroscope angle", gyroscope.getAngle());
+        System.out.println("Gyro Angle = " + gyroscope.getAngle());
     }
 
     @Override
@@ -110,6 +121,8 @@ public class Robot extends TimedRobot {
     // This function is called periodically during test mode.
     @Override
     public void testPeriodic() {
+            SmartDashboard.putNumber("Gyroscope angle", gyroscope.getAngle());
+            System.out.println("Gyro Angle = " + gyroscope.getAngle());
     }
 
 }
