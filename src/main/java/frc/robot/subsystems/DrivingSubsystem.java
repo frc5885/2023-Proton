@@ -21,7 +21,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
@@ -36,7 +37,8 @@ public class DrivingSubsystem extends SubsystemBase {
     private WPI_TalonSRX rightRearMotor;
     private MotorControllerGroup rightMotorController;
     public DifferentialDrive differentialDrive;
-    public AnalogGyro gyroscope;
+    public ADXRS450_Gyro gyroscope;
+    private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0; //todo: move this to constants
   
     public DrivingSubsystem() {
         leftFrontMotor = new WPI_TalonSRX(Constants.LeftFrontMotorID);
@@ -82,9 +84,9 @@ public class DrivingSubsystem extends SubsystemBase {
         differentialDrive.setExpiration(0.1);
         differentialDrive.setMaxOutput(1.0);
 
-        gyroscope = new AnalogGyro(1);
+        gyroscope = new ADXRS450_Gyro(kGyroPort);;
         addChild("Gyroscope",gyroscope);
-        gyroscope.setSensitivity(0.007);
+        gyroscope.calibrate();
     }
 
     @Override
