@@ -21,7 +21,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
+import edu.wpi.first.wpilibj.ADIS16470_IMU.CalibrationTime;
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -37,7 +39,7 @@ public class DrivingSubsystem extends SubsystemBase {
     private WPI_TalonSRX rightRearMotor;
     private MotorControllerGroup rightMotorController;
     public DifferentialDrive differentialDrive;
-    public ADXRS450_Gyro gyroscope;
+    public ADIS16470_IMU gyroscope;
     private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0; //todo: move this to constants
   
     public DrivingSubsystem() {
@@ -84,7 +86,12 @@ public class DrivingSubsystem extends SubsystemBase {
         differentialDrive.setExpiration(0.1);
         differentialDrive.setMaxOutput(1.0);
 
-        gyroscope = new ADXRS450_Gyro(kGyroPort);;
+
+        // TankTurn
+        //gyroscope = new ADIS16470_IMU(IMUAxis.kY, kGyroPort, CalibrationTime._1s);
+        // Balance
+        gyroscope = new ADIS16470_IMU(IMUAxis.kZ, kGyroPort, CalibrationTime._1s);
+
         addChild("Gyroscope",gyroscope);
         gyroscope.calibrate();
     }
@@ -92,7 +99,7 @@ public class DrivingSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        System.out.println("Angle = " + gyroscope.getAngle());
+        System.out.println("Angle =" + gyroscope.getAngle());
     }
 
     @Override

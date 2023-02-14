@@ -2,15 +2,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.ADIS16448_IMU.IMUAxis;
+
 import java.util.function.DoubleSupplier;
 import frc.robot.subsystems.DrivingSubsystem;
 
-public class TankTurnCommand extends PIDCommand {
+public class BalanceCommand extends PIDCommand {
     private final DrivingSubsystem m_drivingSubsystem;
 
-    public TankTurnCommand(DrivingSubsystem drivingSubsystem, double targetAngle) {
-        super(new PIDController(0.03, 0.0, 0.01), drivingSubsystem::getAngle,
-        targetAngle, output -> drivingSubsystem.drive(output, -output, 1.0), drivingSubsystem);
+    public BalanceCommand(DrivingSubsystem drivingSubsystem) {
+        super(new PIDController(0.035, 0.01, 0.03), drivingSubsystem::getAngle,
+        0.0, output -> drivingSubsystem.drive(-output, -output, .75), drivingSubsystem);
         m_drivingSubsystem = drivingSubsystem;
     }
 
