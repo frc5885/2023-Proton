@@ -47,7 +47,6 @@ public class SwitchController {
         
         double power = (((angle - a1) * (p2 - p1)) / (a2 - a1)) + p1;
         return power;        
-
     }
 
     int LowerIndex(double angle) {
