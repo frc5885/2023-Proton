@@ -99,7 +99,7 @@ public class DrivingSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        System.out.println("Angle =" + gyroscope.getAngle());
+        //System.out.println("Angle =" + gyroscope.getAngle());
     }
 
     @Override
