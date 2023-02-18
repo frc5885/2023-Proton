@@ -13,10 +13,13 @@ public class BalanceCommand extends CommandBase {
 
     // Does the power calculation for a given ramp angle
     private final SwitchController m_switchController = new SwitchController();
-    private final double m_rampAngle = 7.0;
-    private final double m_flatSpeed = .4;
+    private final double m_rampAngle = 10.0;
+    private final double m_flatSpeed = .6;
+    private final double m_powerScale = 1.05;  // scale output up/down quickly
     private double m_angle = 0.0;
+    private double m_prevAngle = 0.0; // previous value of m_angle
     private  boolean m_onRamp = false;  // are we on the ramp yet?
+    
     
     public BalanceCommand(DrivingSubsystem drivingSubsystem) {
         m_drivingSubsystem = drivingSubsystem;
@@ -42,13 +45,15 @@ public class BalanceCommand extends CommandBase {
         {
             ExecuteFlatControl();
         }
+
+        m_prevAngle = m_angle; // save previous value
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         if (!interrupted) {
-            //todo m_drivingSubsystem.SetBrakeMode();
+            m_drivingSubsystem.SetBrakeMode(true);
             m_drivingSubsystem.drive(0.0, 0.0, 1.0);
             System.out.println("End!!!");
         }
@@ -57,9 +62,8 @@ public class BalanceCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        System.out.println("Finished!");
-
-        boolean finished = (m_onRamp && Math.abs(m_angle) < 2.0);
+        boolean stopped = m_drivingSubsystem.IsStopped();
+        boolean finished = (m_onRamp && stopped); 
         return finished;
     }
 
@@ -82,6 +86,7 @@ public class BalanceCommand extends CommandBase {
             power *= -1;
         }
 
+        power *= m_powerScale;
         System.out.println("On the ramp: Angle = " + m_angle + "Power = " + power);
         m_drivingSubsystem.drive(power, power, 1.0);
     }

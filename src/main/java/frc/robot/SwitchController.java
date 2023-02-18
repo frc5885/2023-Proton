@@ -4,17 +4,16 @@ import frc.ControllerPoint;
 
 public class SwitchController {
     private final double m_maxPower = .5;     // maximum power that we want to supply
-    private final double m_powerScale = 1.0;  // scale output up/down quickly
     private List<ControllerPoint> m_points = new ArrayList<ControllerPoint>();
 
     public SwitchController() {
         m_points.add(new ControllerPoint(0.0, 0.0));
         m_points.add(new ControllerPoint(1.0, 0.0));
         m_points.add(new ControllerPoint(2.0, 0.0));
-        m_points.add(new ControllerPoint(3.0, 0.0));
-        m_points.add(new ControllerPoint(4.0, 0.4));
-        m_points.add(new ControllerPoint(5.0, 0.42));
-        m_points.add(new ControllerPoint(6.0, 0.44));
+        m_points.add(new ControllerPoint(3.0, 0.2));
+        m_points.add(new ControllerPoint(4.0, 0.3));
+        m_points.add(new ControllerPoint(5.0, 0.35));
+        m_points.add(new ControllerPoint(6.0, 0.4));
         m_points.add(new ControllerPoint(7.0, 0.46));
         m_points.add(new ControllerPoint(8.0, 0.48));
         m_points.add(new ControllerPoint(9.0, 0.5));

@@ -46,8 +46,7 @@ public class DrivingSubsystem extends SubsystemBase {
         leftFrontMotor = new WPI_TalonSRX(Constants.LeftFrontMotorID);
         addChild("LeftFrontMotor",leftFrontMotor);
         leftFrontMotor.setInverted(true);
-
-
+      
         // just guessing which motor we will be using the encoder from
         // todo: update!
         leftFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
@@ -60,12 +59,10 @@ public class DrivingSubsystem extends SubsystemBase {
         leftFrontMotor.config_kI(Constants.wheelEncoderPIDLoopIndex,0.0, Constants.wheelEncoderTimeoutMs);
         leftFrontMotor.config_kD(Constants.wheelEncoderPIDLoopIndex,0.0, Constants.wheelEncoderTimeoutMs);
 
-
-
         leftRearMotor = new WPI_TalonSRX(Constants.LeftRearMotorID);
         addChild("LeftRearMotor",leftRearMotor);
         leftRearMotor.setInverted(true);
-
+ 
         leftMotorController = new MotorControllerGroup(leftFrontMotor, leftRearMotor);
         addChild("LeftMotorController",leftMotorController);
 
@@ -85,7 +82,6 @@ public class DrivingSubsystem extends SubsystemBase {
         differentialDrive.setSafetyEnabled(false);
         differentialDrive.setExpiration(0.1);
         differentialDrive.setMaxOutput(1.0);
-
 
         // TankTurn
         //gyroscope = new ADIS16470_IMU(IMUAxis.kY, kGyroPort, CalibrationTime._1s);
@@ -115,6 +111,19 @@ public class DrivingSubsystem extends SubsystemBase {
 
     public double getAngle() {
         return gyroscope.getAngle();
+    }
+
+    public void SetBrakeMode(boolean brakeModeOn) {
+        NeutralMode brakeMode = (brakeModeOn) ? NeutralMode.Brake : NeutralMode.Coast;
+        leftFrontMotor.setNeutralMode(brakeMode);
+        rightFrontMotor.setNeutralMode(brakeMode);
+        leftRearMotor.setNeutralMode(brakeMode);
+        rightRearMotor.setNeutralMode(brakeMode);
+    }
+
+    public boolean IsStopped() {
+        double motorSpeed = Math.abs(leftFrontMotor.get());
+        return (motorSpeed < .01);
     }
 }
 
