@@ -2,9 +2,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.ADIS16448_IMU.IMUAxis;
+import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 
-import java.util.function.DoubleSupplier;
 import frc.robot.subsystems.DrivingSubsystem;
 import frc.robot.SwitchController;
 
@@ -17,7 +16,6 @@ public class BalanceCommand extends CommandBase {
     private final double m_flatSpeed = .6;
     private final double m_powerScale = 1.05;  // scale output up/down quickly
     private double m_angle = 0.0;
-    private double m_prevAngle = 0.0; // previous value of m_angle
     private  boolean m_onRamp = false;  // are we on the ramp yet?
     
     
@@ -29,6 +27,7 @@ public class BalanceCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        m_drivingSubsystem.gyroscope.setYawAxis(IMUAxis.kZ);
         m_drivingSubsystem.gyroscope.reset();
     }
 
@@ -45,8 +44,6 @@ public class BalanceCommand extends CommandBase {
         {
             ExecuteFlatControl();
         }
-
-        m_prevAngle = m_angle; // save previous value
     }
 
     // Called once the command ends or is interrupted.

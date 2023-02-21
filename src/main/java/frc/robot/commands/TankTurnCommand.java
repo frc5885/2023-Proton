@@ -2,6 +2,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
+
 import java.util.function.DoubleSupplier;
 import frc.robot.subsystems.DrivingSubsystem;
 
@@ -18,6 +20,7 @@ public class TankTurnCommand extends PIDCommand {
     @Override
     public void initialize() {
         System.out.println("Init gyro");
+        m_drivingSubsystem.gyroscope.setYawAxis(IMUAxis.kY);
         m_drivingSubsystem.gyroscope.reset();
         super.initialize();
     }
