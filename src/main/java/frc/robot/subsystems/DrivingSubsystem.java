@@ -83,6 +83,8 @@ public class DrivingSubsystem extends SubsystemBase {
         differentialDrive.setExpiration(0.1);
         differentialDrive.setMaxOutput(1.0);
 
+        SetBrakeMode(true);
+
         // TankTurn
         //gyroscope = new ADIS16470_IMU(IMUAxis.kY, kGyroPort, CalibrationTime._1s);
         // Balance

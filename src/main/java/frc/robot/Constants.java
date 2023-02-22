@@ -20,14 +20,25 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public class Constants {
-    public static final int LeftRearMotorID = 3;
-    public static final int LeftFrontMotorID = 4;
-    public static final int RightRearMotorID = 2;
-    public static final int RightFrontMotorID = 1;
+    // CAN bus IDs (Proton) 
+    public static final int PneumaticsID = 1; 
+    public static final int ArmMotorID = 2;
+    public static final int LeftRearMotorID =  6;
+    public static final int LeftFrontMotorID = 5;
+    public static final int RightRearMotorID = 3;
+    public static final int RightFrontMotorID = 4;
+
+    // CAN bus IDs (Pedro) 
+    // public static final int PneumaticsID = 1; 
+    // public static final int ArmMotorID = 2;
+    // public static final int LeftRearMotorID =  3;
+    // public static final int LeftFrontMotorID = 4;
+    // public static final int RightRearMotorID = 2;
+    // public static final int RightFrontMotorID = 1;
+
     public static final int GyroPort = 0;
     public static final int LeftWheelEncoderID = -1;
     public static final int RightWheelEncoder = -1;
-    public static final int ArmMotorID = -1;
     public static final int GraberSolenoidID = -1;
     public static final int Camera1USBPortID = 0;
     public static final int Camera2USBPortID = 1;
