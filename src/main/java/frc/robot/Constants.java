@@ -53,5 +53,10 @@ public class Constants {
     public static final int wheelEncoderTimeoutMs = 30;
     public static final int wheelEncoderCountsPerInch = 123345; // todo - set this properly
 
+
+    public static final int gripperOpenButton = 2; //X Button
+    public static final int gripperCloseButton = 3; //Y Button
+    public static final int armExtendButton = 1; //B Button
+    public static final int armRetractButton = 0; // A Button
 }
 
