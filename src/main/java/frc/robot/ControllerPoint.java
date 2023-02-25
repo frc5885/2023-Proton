@@ -1,4 +1,4 @@
-package frc;
+package frc.robot;
 
 public class ControllerPoint {
     public double m_angle = 0.0;  // angle in deg. (x axis of graph)

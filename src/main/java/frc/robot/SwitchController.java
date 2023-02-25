@@ -1,6 +1,6 @@
 package frc.robot;
 import java.util.*; 
-import frc.ControllerPoint;
+import frc.robot.ControllerPoint;
 
 public class SwitchController {
     private final double m_maxPower = .5;     // maximum power that we want to supply

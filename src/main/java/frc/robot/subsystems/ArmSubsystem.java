@@ -18,12 +18,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj.motorcontrol.PWMTalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import frc.robot.Constants;
 
 
 public class ArmSubsystem extends SubsystemBase {
    
-    private PWMTalonFX armMotorController;
+    private WPI_TalonFX armMotorController;
 
    
     public ArmSubsystem() {
@@ -31,6 +32,7 @@ public class ArmSubsystem extends SubsystemBase {
         // armMotorController = new PWMTalonFX(4);
         // addChild("ArmMotorController",armMotorController);
         // armMotorController.setInverted(false);
+        armMotorController = new WPI_TalonFX(Constants.ArmMotorID);
     }
 
     @Override
