@@ -70,7 +70,8 @@ private final XboxController m_xboxController2 = new XboxController(1);
 
     m_drivingSubsystem.setDefaultCommand(new TeleopDriveCommand (m_drivingSubsystem, m_xboxController1));
     m_gripperSubsystem.setDefaultCommand(new GripperOpenCommand(m_gripperSubsystem));
-    m_armSubsystem.setDefaultCommand(new ArmExtendCommand(m_gripperSubsystem));
+    m_armSubsystem.setDefaultCommand(new MoveArmCommand(m_armSubsystem, m_xboxController2));
+    // m_armSubsystem.setDefaultCommand(new ArmExtendCommand(m_gripperSubsystem));
 
     // SmartDashboard Buttons
    // SmartDashboard.putData("Autonomous Command", new TankTurnCommand(m_drivingSubsystem));

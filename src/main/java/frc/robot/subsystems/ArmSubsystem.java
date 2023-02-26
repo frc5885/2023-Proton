@@ -14,6 +14,7 @@ package frc.robot.subsystems;
 
 
 import frc.robot.commands.*;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -26,6 +27,7 @@ public class ArmSubsystem extends SubsystemBase {
    
     private WPI_TalonFX armMotorController;
 
+
    
     public ArmSubsystem() {
         // TODO
@@ -33,6 +35,8 @@ public class ArmSubsystem extends SubsystemBase {
         // addChild("ArmMotorController",armMotorController);
         // armMotorController.setInverted(false);
         armMotorController = new WPI_TalonFX(Constants.ArmMotorID);
+
+        
     }
 
     @Override
@@ -49,6 +53,10 @@ public class ArmSubsystem extends SubsystemBase {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+
+    public void drive(double motorSpeed, double speedFactor){
+        armMotorController.set(motorSpeed * speedFactor);
+    }
 
 }
 
