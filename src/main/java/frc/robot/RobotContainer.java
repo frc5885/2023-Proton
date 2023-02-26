@@ -68,9 +68,9 @@ private final CommandXboxController m_xboxController2 = new CommandXboxControlle
     // Configure the button bindings
     configureButtonBindings();
 
-    // m_drivingSubsystem.setDefaultCommand(new TeleopDriveCommand (m_drivingSubsystem, m_xboxController1));
+    m_drivingSubsystem.setDefaultCommand(new TeleopDriveCommand (m_drivingSubsystem, m_xboxController1));
     m_gripperSubsystem.setDefaultCommand(new GripperOpenCommand(m_gripperSubsystem));
-
+    m_armSubsystem.setDefaultCommand(new ArmExtendCommand(m_gripperSubsystem));
 
     // SmartDashboard Buttons
    // SmartDashboard.putData("Autonomous Command", new TankTurnCommand(m_drivingSubsystem));
