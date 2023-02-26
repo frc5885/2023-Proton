@@ -50,6 +50,7 @@ public final CameraSubsystem m_cameraSubsystem = new CameraSubsystem();
 public final GripperSubsystem m_gripperSubsystem = new GripperSubsystem();
 public final ArmSubsystem m_armSubsystem = new ArmSubsystem();
 public final DrivingSubsystem m_drivingSubsystem = new DrivingSubsystem();
+public final FootSubsystem m_footSubsystem = new FootSubsystem();
 
 // Joysticks
 private final XboxController m_xboxController1 = new XboxController(0);
@@ -71,6 +72,7 @@ private final XboxController m_xboxController2 = new XboxController(1);
     m_drivingSubsystem.setDefaultCommand(new TeleopDriveCommand (m_drivingSubsystem, m_xboxController1));
     m_gripperSubsystem.setDefaultCommand(new GripperOpenCommand(m_gripperSubsystem));
     m_armSubsystem.setDefaultCommand(new ArmExtendCommand(m_gripperSubsystem));
+    m_footSubsystem.setDefaultCommand(new FootToggleCommand(m_footSubsystem));
 
     // SmartDashboard Buttons
    // SmartDashboard.putData("Autonomous Command", new TankTurnCommand(m_drivingSubsystem));
@@ -95,6 +97,8 @@ private final XboxController m_xboxController2 = new XboxController(1);
     Trigger armExtendButton = new JoystickButton(m_xboxController2, XboxController.Button.kB.value);
     Trigger gripperCloseButton = new JoystickButton(m_xboxController2, XboxController.Button.kX.value);
     Trigger gripperOpenBUtton = new JoystickButton(m_xboxController2, XboxController.Button.kY.value);
+    Trigger toggleFootButton = new JoystickButton(m_xboxController1, XboxController.Button.kStart.value);
+
 
     // Trigger armRetractTrigger = m_xboxController2.a();
     // Trigger armExtendTrigger = m_xboxController2.b();
@@ -104,6 +108,7 @@ private final XboxController m_xboxController2 = new XboxController(1);
     armExtendButton.onTrue(new ArmExtendCommand(m_gripperSubsystem));
     gripperCloseButton.onTrue(new GripperCloseCommand(m_gripperSubsystem));
     gripperOpenBUtton.onTrue(new GripperOpenCommand(m_gripperSubsystem));
+    toggleFootButton.onTrue(new FootToggleCommand(m_footSubsystem));
   }
 
   /**
