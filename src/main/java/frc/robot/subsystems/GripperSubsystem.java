@@ -12,7 +12,6 @@
 
 package frc.robot.subsystems;
 
-
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.Constants;
 
 public class GripperSubsystem extends SubsystemBase {
@@ -57,48 +57,32 @@ public class GripperSubsystem extends SubsystemBase {
 
     //TODO Make close, open, extend, retratc functions and then make them interact
     public void closeGripper(){
-        //If gripper is already closed, it does nothing
-        if (gripSolenoid.isFwdSolenoidDisabled() == false && gripSolenoid.isRevSolenoidDisabled() == true){
-            return;
-        }
         //Gripper isn't closed
-        gripSolenoid.toggle();
-        return;
+        if(gripSolenoid.get() != Value.kForward){
+            gripSolenoid.set(Value.kForward);
+        }
     }
 
-    public void OpenGripper(){
-        //If gripper is already open, it does nothing
-        if (gripSolenoid.isRevSolenoidDisabled() == false && gripSolenoid.isFwdSolenoidDisabled() == true){
-            return;
+    public void openGripper(){
+        //Gripper isn't closed
+        if(gripSolenoid.get() != Value.kReverse){
+            gripSolenoid.set(Value.kReverse);
         }
-        //Gripper isn't open
-        gripSolenoid.toggle();
-        return; 
     }
 
     public void retractArm(){
-        //If arm is already closed, it does nothing
-        if (armSolenoid.isFwdSolenoidDisabled() == false && armSolenoid.isRevSolenoidDisabled() == true){
-            return;
+        //Gripper isn't closed
+        if(armSolenoid.get() != Value.kReverse){
+            armSolenoid.set(Value.kReverse);
         }
-        //Arm isn't closed
-        armSolenoid.toggle();
-        return;
     }
 
     public void extendArm(){
-        //If arm is already open, it does nothing
-        if (armSolenoid.isRevSolenoidDisabled() == false && armSolenoid.isFwdSolenoidDisabled() == true){
-            return;
+        //Gripper isn't closed
+        if(armSolenoid.get() != Value.kForward){
+            armSolenoid.set(Value.kForward);
         }
-        //Arm isn't open
-        armSolenoid.toggle();
-        return;
-
-    
     }
 
-    
-    //deployGamePieceRoutine
-}
 
+}
