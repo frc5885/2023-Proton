@@ -1,14 +1,16 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.*;
+
+import frc.robot.subsystems.FootSubsystem;
 import frc.robot.subsystems.GripperSubsystem;
 import frc.robot.Constants;
 
-public class GripperCloseCommand extends CommandBase {
-    private final GripperSubsystem m_gripperSubsystem;
-    public GripperCloseCommand (GripperSubsystem gripperSubsystem) {
-        m_gripperSubsystem = gripperSubsystem;
-        addRequirements(m_gripperSubsystem);
+public class FootToggleCommand extends CommandBase {
+    private final FootSubsystem m_footSubsystem;
+    public FootToggleCommand (FootSubsystem footSubsystem) {
+        m_footSubsystem = footSubsystem;
+        addRequirements(m_footSubsystem);
     }
 
     @Override
@@ -18,8 +20,13 @@ public class GripperCloseCommand extends CommandBase {
      // Called every time the scheduler runs while the command is scheduled.
      @Override
      public void execute() {
-        m_gripperSubsystem.closeGripper();
-     }
+        if (m_footSubsystem.isExtended()){
+            m_footSubsystem.retractFoot();
+            return;
+        }
+        
+        m_footSubsystem.extendFoot();    
+    }
  
      // Called once the command ends or is interrupted.
      @Override
@@ -29,7 +36,7 @@ public class GripperCloseCommand extends CommandBase {
      // Returns true when the command should end.
      @Override
      public boolean isFinished() {
-         return false;
+         return true;
      }
  
      @Override
