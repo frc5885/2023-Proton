@@ -13,6 +13,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import frc.robot.PowerCurve;
 import frc.robot.commands.*;
 
 import com.ctre.phoenix.motorcontrol.*;
@@ -40,6 +41,7 @@ public class DrivingSubsystem extends SubsystemBase {
     public DifferentialDrive differentialDrive;
     public ADIS16470_IMU gyroscope;
     private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0; //todo: move this to constants
+    private double powerExp = 1.4;
   
     public DrivingSubsystem() {
         leftFrontMotor = new WPI_TalonSRX(Constants.LeftFrontMotorID);
@@ -107,7 +109,7 @@ public class DrivingSubsystem extends SubsystemBase {
 
     public void drive(double LeftMotorSpeed, double RightMotorSpeed, double speedFactor) {
         differentialDrive.setMaxOutput(speedFactor);
-        differentialDrive.tankDrive(LeftMotorSpeed , RightMotorSpeed);
+        differentialDrive.tankDrive(PowerCurve.getPoint(LeftMotorSpeed, powerExp) , PowerCurve.getPoint(RightMotorSpeed, powerExp));
     }
 
     public double getAngle() {

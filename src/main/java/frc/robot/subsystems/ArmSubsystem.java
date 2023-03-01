@@ -21,12 +21,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import frc.robot.Constants;
+import frc.robot.PowerCurve;
 
 
 public class ArmSubsystem extends SubsystemBase {
    
     private WPI_TalonFX armMotorController;
 
+    private double powerExp = 2.5;
 
    
     public ArmSubsystem() {
@@ -55,7 +57,7 @@ public class ArmSubsystem extends SubsystemBase {
     // here. Call these from Commands.
 
     public void drive(double motorSpeed, double speedFactor){
-        armMotorController.set(motorSpeed * speedFactor);
+        armMotorController.set(PowerCurve.getPoint(motorSpeed, powerExp) * 0.5);
     }
 
 }

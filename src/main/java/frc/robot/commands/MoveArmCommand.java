@@ -25,7 +25,7 @@ public class MoveArmCommand extends CommandBase {
     public void execute() {
        double speedFactor = Constants.armSpeedFactor;
        double leftJoystickPos = m_xboxContoller.getRawAxis(Constants.LeftYAxis);
-       m_armSubsystem.drive(leftJoystickPos * 0.35, speedFactor);
+       m_armSubsystem.drive(leftJoystickPos, speedFactor);
     }
 
     // Called once the command ends or is interrupted.
