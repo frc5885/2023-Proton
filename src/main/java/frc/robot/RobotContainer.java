@@ -126,8 +126,8 @@ private final XboxController m_xboxController2 = new XboxController(1);
   public Command getAutonomousCommand() {
     // The selected command will be run in autonomous
     //return m_chooser.getSelected();
-    TankTurnCommand cmd = new TankTurnCommand(m_drivingSubsystem, -45.0);
-    //BalanceCommand cmd =  new BalanceCommand(m_drivingSubsystem);
+    // TankTurnCommand cmd = new TankTurnCommand(m_drivingSubsystem, -45.0);
+    BalanceCommand cmd =  new BalanceCommand(m_drivingSubsystem, m_footSubsystem);
     return cmd;
   }
 }

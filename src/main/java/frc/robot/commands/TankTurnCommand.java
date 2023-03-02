@@ -20,7 +20,7 @@ public class TankTurnCommand extends PIDCommand {
     @Override
     public void initialize() {
         System.out.println("Init gyro");
-        m_drivingSubsystem.gyroscope.setYawAxis(IMUAxis.kY);
+        m_drivingSubsystem.gyroscope.setYawAxis(IMUAxis.kZ);
         m_drivingSubsystem.gyroscope.reset();
         super.initialize();
     }
