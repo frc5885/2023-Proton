@@ -1,29 +1,44 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
-import edu.wpi.first.math.controller.PIDController;
+
+import java.sql.Time;
+
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
-import frc.robot.subsystems.ArmSubsystem;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.DrivingSubsystem;
 import frc.robot.subsystems.FootSubsystem;
+import frc.robot.subsystems.CubeKickSubsystem;
 import frc.robot.SwitchController;
+import frc.robot.Constants;
 
 public class BalanceCommand extends CommandBase {
     private final DrivingSubsystem m_drivingSubsystem;
     private final FootSubsystem m_FootSubsystem;
+    private final CubeKickSubsystem m_kickSubsystem;
+    private final XboxController m_controller;
 
     // Does the power calculation for a given ramp angle
     private final SwitchController m_switchController = new SwitchController();
     private final double m_rampAngle = 10.0;
-    private final double m_flatSpeed = .6;
-    private final double m_powerScale = 1.04;  // scale output up/down quickly
+    private final double m_flatSpeed = .95;
+    private final double m_powerScale = 1.02;  // scale output up/down quickly
+    private boolean m_isCancelled = false;
     private double m_angle = 0.0;
-    private  boolean m_onRamp = false;  // are we on the ramp yet?
+    private boolean m_onRamp = false;  // are we on the ramp yet?
+    private final Timer m_timer = new Timer();
+    boolean m_timerStarted = false;
+    private final double m_stopTime = 2;
+    private boolean m_kickCube = false;    
     
-    
-    public BalanceCommand(DrivingSubsystem drivingSubsystem, FootSubsystem footSubsystem) {
+    public BalanceCommand(DrivingSubsystem drivingSubsystem, FootSubsystem footSubsystem,
+        CubeKickSubsystem kickSubsystem, XboxController controller, boolean kickCube) {
         m_drivingSubsystem = drivingSubsystem;
         m_FootSubsystem = footSubsystem;
+        m_kickSubsystem = kickSubsystem;
+        m_controller = controller;
+        m_kickCube = kickCube;
         addRequirements(m_drivingSubsystem);
         addRequirements(m_FootSubsystem);
     }
@@ -31,6 +46,7 @@ public class BalanceCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        m_timer.reset();
         m_drivingSubsystem.gyroscope.setYawAxis(IMUAxis.kX);
         m_drivingSubsystem.gyroscope.reset();
     }
@@ -38,14 +54,28 @@ public class BalanceCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_angle = m_drivingSubsystem.getAngle();
+        if (m_controller != null) {
+            // manually kill this command if something goes south
+            m_isCancelled = m_controller.getRawAxis(Constants.LeftYAxis) >= 0.2 || m_controller.getRawAxis(Constants.LeftYAxis) <= -0.2 ||
+                            m_controller.getRawAxis(Constants.RightYAxis) >= 0.2 || m_controller.getRawAxis(Constants.RightYAxis) <= -0.2;
+            m_angle = m_drivingSubsystem.getAngle();
+        }
+
+        if (m_kickCube)
+        {
+            // kick the cube at the start of autonomous
+            m_kickSubsystem.extendKicker();
+            m_kickCube = false;
+        }
 
         if (m_onRamp)
         {
+            // Controller for balancing on the charger
             ExecuteRampControl();
         }
         else
         {
+            // Approach the ramp
             ExecuteFlatControl();
         }
     }
@@ -64,10 +94,28 @@ public class BalanceCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        boolean stopped = m_drivingSubsystem.IsStopped();
-        boolean finished = (m_onRamp && stopped);
-        if (finished) {
-            
+        if (m_isCancelled) {
+            return true;
+        }
+
+        if (!m_onRamp){
+            return false;
+        }
+
+        boolean motorsOff = m_drivingSubsystem.IsStopped();
+        boolean finished = false;
+
+        if (motorsOff){
+            if (m_timerStarted){
+                finished = (m_timer.get() > m_stopTime);
+            }   
+            else{
+                m_timer.start();
+                m_timerStarted = true;
+            } 
+        }
+        else{
+            m_timer.reset();
         }
         return finished;
     }

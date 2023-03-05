@@ -66,6 +66,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
+        m_robotContainer.extendFoot();  
     }
 
     // This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
@@ -94,6 +95,9 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
+
+        // make sure the foot is retacted
+        m_robotContainer.retractFoot();
     }
 
     // This function is called periodically during operator control.
