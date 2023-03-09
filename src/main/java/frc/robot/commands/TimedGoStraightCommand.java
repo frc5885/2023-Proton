@@ -17,6 +17,7 @@ public class TimedGoStraightCommand extends CommandBase {
     public TimedGoStraightCommand(DrivingSubsystem drivingSubsystem, double targetTime) {
         m_targetTime = targetTime;
         m_drivingSubsystem = drivingSubsystem;
+        addRequirements(m_drivingSubsystem);
     }
 
     // Called when the command is initially scheduled.
@@ -32,7 +33,7 @@ public class TimedGoStraightCommand extends CommandBase {
     @Override
     public void execute() {
         //TODO This should be set in constants
-        m_drivingSubsystem.drive(.5, .5, 1.0);
+        m_drivingSubsystem.drive(-.75, -.75, 1.0);
     }
 
     // Called once the command ends or is interrupted.

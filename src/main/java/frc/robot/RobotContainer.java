@@ -32,6 +32,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.GripperSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.commands.TimedGoStraightCommand;
+import frc.robot.commands.ConeKickCommand;
 
 
 /**
@@ -127,15 +128,16 @@ public class RobotContainer {
     // The selected command will be run in autonomous
     //return m_chooser.getSelected();
     // TankTurnCommand cmd = new TankTurnCommand(m_drivingSubsystem, -45.0);
-    BalanceCommand cmd =  new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_kickSubsystem,
-      null, true);
-    // TimedGoStraightCommand cmd = new TimedGoStraightCommand(m_drivingSubsystem, 5);
+    // BalanceCommand cmd =  new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_kickSubsystem,
+    //   null, true);
+    ConeKickCommand cmd = new ConeKickCommand(m_kickSubsystem, true, m_drivingSubsystem);
+    // TimedGoStraightCommand cmd = new TimedGoStraightCommand(m_drivingSubsystem, 2);
     return cmd;
   }
   
   public void retractFoot(){
     m_footSubsystem.extendFoot();
-  }
+  } 
 
   public void extendFoot(){
     //m_footSubsystem.retractFoot();

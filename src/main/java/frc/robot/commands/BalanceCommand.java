@@ -28,6 +28,7 @@ public class BalanceCommand extends CommandBase {
     private double m_angle = 0.0;
     private boolean m_onRamp = false;  // are we on the ramp yet?
     private final Timer m_timer = new Timer();
+    private final Timer m_delay = new Timer();
     boolean m_timerStarted = false;
     private final double m_stopTime = 2;
     private boolean m_kickCube = false;    
@@ -49,6 +50,8 @@ public class BalanceCommand extends CommandBase {
         m_timer.reset();
         m_drivingSubsystem.gyroscope.setYawAxis(IMUAxis.kX);
         m_drivingSubsystem.gyroscope.reset();
+        m_delay.reset();
+        m_delay.start();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -58,9 +61,10 @@ public class BalanceCommand extends CommandBase {
             // manually kill this command if something goes south
             m_isCancelled = m_controller.getRawAxis(Constants.LeftYAxis) >= 0.2 || m_controller.getRawAxis(Constants.LeftYAxis) <= -0.2 ||
                             m_controller.getRawAxis(Constants.RightYAxis) >= 0.2 || m_controller.getRawAxis(Constants.RightYAxis) <= -0.2;
-            m_angle = m_drivingSubsystem.getAngle();
         }
 
+        m_angle = m_drivingSubsystem.getAngle();
+ 
         if (m_kickCube)
         {
             // kick the cube at the start of autonomous
@@ -68,15 +72,17 @@ public class BalanceCommand extends CommandBase {
             m_kickCube = false;
         }
 
-        if (m_onRamp)
-        {
-            // Controller for balancing on the charger
-            ExecuteRampControl();
-        }
-        else
-        {
-            // Approach the ramp
-            ExecuteFlatControl();
+        if (m_delay.get() > 1){
+            if (m_onRamp)
+            {
+                // Controller for balancing on the charger
+                ExecuteRampControl();
+            }
+            else
+            {
+                // Approach the ramp
+                ExecuteFlatControl();
+            }
         }
     }
 
