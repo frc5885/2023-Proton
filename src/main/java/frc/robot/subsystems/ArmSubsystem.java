@@ -19,26 +19,28 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import frc.robot.Constants;
 import frc.robot.PowerCurve;
 
 
 public class ArmSubsystem extends SubsystemBase {
-   
     private WPI_TalonFX armMotorController;
-
     private double powerExp = 2.5;
-
    
     public ArmSubsystem() {
-        // TODO
-        // armMotorController = new PWMTalonFX(4);
-        // addChild("ArmMotorController",armMotorController);
-        // armMotorController.setInverted(false);
         armMotorController = new WPI_TalonFX(Constants.ArmMotorID);
+        armMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
+        Constants.armEncoderPIDLoopIndex, Constants.armEncoderTimeoutMs);
+        armMotorController.setSensorPhase(true);
 
-        
+        // todo: set F,K,P,I,D!
+        armMotorController.config_kF(Constants.armEncoderPIDLoopIndex,0.0, Constants.armEncoderTimeoutMs);
+        armMotorController.config_kP(Constants.armEncoderPIDLoopIndex,0.0, Constants.armEncoderTimeoutMs);
+        armMotorController.config_kI(Constants.armEncoderPIDLoopIndex,0.0, Constants.armEncoderTimeoutMs);
+        armMotorController.config_kD(Constants.armEncoderPIDLoopIndex,0.0, Constants.armEncoderTimeoutMs);
     }
 
     @Override

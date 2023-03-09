@@ -1,10 +1,6 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import java.util.function.*;
-
 import frc.robot.subsystems.FootSubsystem;
-import frc.robot.subsystems.GripperSubsystem;
-import frc.robot.Constants;
 
 public class FootToggleCommand extends CommandBase {
     private final FootSubsystem m_footSubsystem;
@@ -20,12 +16,12 @@ public class FootToggleCommand extends CommandBase {
      // Called every time the scheduler runs while the command is scheduled.
      @Override
      public void execute() {
-        if (m_footSubsystem.isExtended()){
-            m_footSubsystem.retractFoot();
+        if (!m_footSubsystem.isExtended()){
+            m_footSubsystem.extendFoot();
             return;
         }
         
-        m_footSubsystem.extendFoot();    
+        m_footSubsystem.retractFoot();    
     }
  
      // Called once the command ends or is interrupted.

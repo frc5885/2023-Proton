@@ -12,44 +12,44 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.commands.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.Constants;
 
 public class FootSubsystem extends SubsystemBase {
-
     private DoubleSolenoid footSolenoid;    //open and closing gripper solenoid which controls valve
+    private DigitalOutput alertLight;
 
     public FootSubsystem() {
         footSolenoid = new DoubleSolenoid(Constants.PneumaticsID, PneumaticsModuleType.CTREPCM, 4, 5);
         addChild("footSolenoid", footSolenoid);
+        alertLight = new DigitalOutput(0);
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-
     }
 
     @Override
     public void simulationPeriodic() {
         // This method will be called once per scheduler run when in simulation
-
-    }
-
-    public void extendFoot() {
-        footSolenoid.set(Value.kForward);
     }
 
     public void retractFoot() {
+        footSolenoid.set(Value.kForward);
+        alertLight.set(false);
+    }
+
+    public void extendFoot() {
         footSolenoid.set(Value.kReverse);
+        alertLight.set(true);
     }
 
     public boolean isExtended() {
-        return footSolenoid.get() == Value.kForward;
+        return footSolenoid.get() == Value.kReverse;
     }
 }

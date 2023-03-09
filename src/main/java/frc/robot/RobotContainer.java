@@ -136,7 +136,7 @@ public class RobotContainer {
   }
   
   public void retractFoot(){
-    m_footSubsystem.extendFoot();
+    m_footSubsystem.retractFoot();
   } 
 
   public void extendFoot(){

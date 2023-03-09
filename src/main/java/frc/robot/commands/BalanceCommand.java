@@ -1,9 +1,5 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
-
-import java.sql.Time;
-
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
@@ -92,7 +88,7 @@ public class BalanceCommand extends CommandBase {
         if (!interrupted) {
             m_drivingSubsystem.SetBrakeMode(true);
             m_drivingSubsystem.drive(0.0, 0.0, 1.0);
-            m_FootSubsystem.retractFoot();
+            m_FootSubsystem.extendFoot();
             System.out.println("End!!!");
         }
     }
