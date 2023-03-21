@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.DrivingSubsystem;
 import frc.robot.subsystems.CubeKickSubsystem;
 
-public class ConeKickCommand extends CommandBase {
+public class LeaveCommunityCommand extends CommandBase {
     private final DrivingSubsystem m_drivingSubsystem;
     private final CubeKickSubsystem m_kickSubsystem;
 
@@ -13,7 +13,7 @@ public class ConeKickCommand extends CommandBase {
     boolean m_timerStarted = false;
     private boolean m_kickCube = false;    
     
-    public ConeKickCommand(CubeKickSubsystem kickSubsystem, boolean kickCube, DrivingSubsystem drivingSubsystem) {
+    public LeaveCommunityCommand(CubeKickSubsystem kickSubsystem, boolean kickCube, DrivingSubsystem drivingSubsystem) {
         m_kickSubsystem = kickSubsystem;
         m_drivingSubsystem = drivingSubsystem;
         m_kickCube = kickCube;
@@ -23,7 +23,8 @@ public class ConeKickCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-       return;
+        m_delay.reset();
+        m_delay.start();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -35,12 +36,17 @@ public class ConeKickCommand extends CommandBase {
             m_kickSubsystem.extendKicker();
             m_kickCube = false;
         }
+
+        if (m_delay.get() > 1 ){
+            m_drivingSubsystem.drive(-.75, -.75, 1.0);
+        }
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         if (!interrupted) {
+            m_drivingSubsystem.drive(0, 0, 1);
             System.out.println("End!!!");
         }
     }

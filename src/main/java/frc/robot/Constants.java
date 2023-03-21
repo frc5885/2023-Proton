@@ -58,6 +58,7 @@ public class Constants {
 
     public static final String kBalance = "Charging Station";
     public static final String kCrossLine = "Leave Community";
+    public static final String kConekick = "Kick Cone";
 
     public static final int gripperOpenButton = 2; //X Button
     public static final int gripperCloseButton = 3; //Y Button

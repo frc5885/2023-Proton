@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
         m_chooser.setDefaultOption("Do Nothing", "Do Nothing");
         m_chooser.addOption(Constants.kBalance, Constants.kBalance);
         m_chooser.addOption(Constants.kCrossLine, Constants.kCrossLine);
+        m_chooser.addOption(Constants.kConekick, Constants.kConekick);
         SmartDashboard.putData("Autonomous Command", m_chooser);
     }
 

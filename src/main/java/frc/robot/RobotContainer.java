@@ -132,6 +132,9 @@ public class RobotContainer {
         null, true);
 
       case Constants.kCrossLine:
+        return new LeaveCommunityCommand(m_kickSubsystem, true, m_drivingSubsystem);
+
+      case Constants.kConekick:
         return new ConeKickCommand(m_kickSubsystem, true, m_drivingSubsystem);
 
       default:
