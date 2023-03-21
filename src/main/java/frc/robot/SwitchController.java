@@ -33,7 +33,10 @@ public class SwitchController {
         if (index1 == index2){
             return m_points.get(index1).m_power;
         }
-        // Similar triangles between p and a to interpolate
+
+        // Sets points based off the indices in our list
+        // (a1, p1) is the point of the index that is the greatest and lower than the angle
+        // (a2, p2) is the point of the index that is the lowest and larger than the angle
 
         double a1 = m_points.get(index1).m_angle;
         double a2 = m_points.get(index2).m_angle;
@@ -48,11 +51,15 @@ public class SwitchController {
         if (a2 - angle < 0.01){
             return p2; 
         }
-        
+
+         // Similar triangles between (a1, p1) and (a2, p2) to interpolate
+
         double power = (((angle - a1) * (p2 - p1)) / (a2 - a1)) + p1;
         return power;        
     }
 
+    // Returns the index for the greatest angle less than angle
+    // I: angle - input angle from gyroscope
     int LowerIndex(double angle) {
         int index = 0;
         while (index < m_points.size() && angle >= m_points.get(index).m_angle) {
@@ -66,6 +73,9 @@ public class SwitchController {
 
         return index;
     }
+
+    // Returns the index for the lowest angle greater than the angle
+    // I: angle - input angle from gyroscope
 
     int UpperIndex(double angle) {
         int index = m_points.size() - 1;

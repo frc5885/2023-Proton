@@ -124,15 +124,19 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
   */
-  public Command getAutonomousCommand() {
+  public Command getAutonomousCommand(String autoSelected) {
     // The selected command will be run in autonomous
-    //return m_chooser.getSelected();
-    // TankTurnCommand cmd = new TankTurnCommand(m_drivingSubsystem, -45.0);
-    // BalanceCommand cmd =  new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_kickSubsystem,
-    //   null, true);
-    ConeKickCommand cmd = new ConeKickCommand(m_kickSubsystem, true, m_drivingSubsystem);
-    // TimedGoStraightCommand cmd = new TimedGoStraightCommand(m_drivingSubsystem, 2);
-    return cmd;
+    switch (autoSelected){
+      case Constants.kBalance:
+        return new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_kickSubsystem,
+        null, true);
+
+      case Constants.kCrossLine:
+        return new ConeKickCommand(m_kickSubsystem, true, m_drivingSubsystem);
+
+      default:
+        return null;
+    }
   }
   
   public void retractFoot(){

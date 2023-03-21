@@ -47,18 +47,6 @@ public class DrivingSubsystem extends SubsystemBase {
         leftFrontMotor = new WPI_TalonSRX(Constants.LeftFrontMotorID);
         addChild("LeftFrontMotor",leftFrontMotor);
         leftFrontMotor.setInverted(true);
-      
-        // just guessing which motor we will be using the encoder from
-        // todo: update!
-        leftFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
-            Constants.armEncoderPIDLoopIndex, Constants.wheelEncoderTimeoutMs);
-        leftFrontMotor.setSensorPhase(true);
-
-        // todo: set F,K,P,I,D!
-        leftFrontMotor.config_kF(Constants.armEncoderPIDLoopIndex,0.0, Constants.wheelEncoderTimeoutMs);
-        leftFrontMotor.config_kP(Constants.armEncoderPIDLoopIndex,0.0, Constants.wheelEncoderTimeoutMs);
-        leftFrontMotor.config_kI(Constants.armEncoderPIDLoopIndex,0.0, Constants.wheelEncoderTimeoutMs);
-        leftFrontMotor.config_kD(Constants.armEncoderPIDLoopIndex,0.0, Constants.wheelEncoderTimeoutMs);
 
         leftRearMotor = new WPI_TalonSRX(Constants.LeftRearMotorID);
         addChild("LeftRearMotor",leftRearMotor);
