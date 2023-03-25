@@ -31,7 +31,6 @@ public class FootSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
     }
 
     @Override
@@ -42,10 +41,13 @@ public class FootSubsystem extends SubsystemBase {
     public void retractFoot() {
         footSolenoid.set(Value.kForward);
         alertLight.set(false);
-    }
+        System.out.println("light should be on!!!!!");
+        alertLight.set(true);
+}
 
     public void extendFoot() {
         footSolenoid.set(Value.kReverse);
+        System.out.println("light should be on!!!!!");
         alertLight.set(true);
     }
 

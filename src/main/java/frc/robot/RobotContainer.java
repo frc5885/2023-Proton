@@ -31,8 +31,6 @@ import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.GripperSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.commands.TimedGoStraightCommand;
-import frc.robot.commands.ConeKickCommand;
 
 
 /**
@@ -100,23 +98,28 @@ public class RobotContainer {
     Trigger armRetractButton = new JoystickButton(m_xboxController2, XboxController.Button.kA.value);
     Trigger armExtendButton = new JoystickButton(m_xboxController2, XboxController.Button.kB.value);
     Trigger gripperCloseButton = new JoystickButton(m_xboxController2, XboxController.Button.kX.value);
-    Trigger gripperOpenBUtton = new JoystickButton(m_xboxController2, XboxController.Button.kY.value);
+    Trigger gripperOpenButton = new JoystickButton(m_xboxController2, XboxController.Button.kY.value);
+    Trigger levelZeroButton = new JoystickButton(m_xboxController2, XboxController.Button.kA.value);
+    Trigger levelOneButton = new JoystickButton(m_xboxController2, XboxController.Button.kX.value);
+    Trigger levelTwoButton = new JoystickButton(m_xboxController2, XboxController.Button.kY.value);
+    Trigger levelThreeButton = new JoystickButton(m_xboxController2, XboxController.Button.kB.value);
 
     // Controller 1
     Trigger toggleFootButton = new JoystickButton(m_xboxController1, XboxController.Button.kStart.value);
     Trigger balanceButton = new JoystickButton(m_xboxController1, XboxController.Button.kB.value);
 
-    // Trigger armRetractTrigger = m_xboxController2.a();
-    // Trigger armExtendTrigger = m_xboxController2.b();
-    // Trigger gripperCloseTrigger = m_xboxController2.x();
-    // Trigger gripperOpenButton = m_xboxController2.y();
-    armRetractButton.onTrue(new ArmRetractCommand(m_gripperSubsystem));
-    armExtendButton.onTrue(new ArmExtendCommand(m_gripperSubsystem));
-    gripperCloseButton.onTrue(new GripperCloseCommand(m_gripperSubsystem));
-    gripperOpenBUtton.onTrue(new GripperOpenCommand(m_gripperSubsystem));
+    // armRetractButton.onTrue(new ArmRetractCommand(m_gripperSubsystem));
+    // armExtendButton.onTrue(new ArmExtendCommand(m_gripperSubsystem));
+    // gripperCloseButton.onTrue(new GripperCloseCommand(m_gripperSubsystem));
+    // gripperOpenButton.onTrue(new GripperOpenCommand(m_gripperSubsystem));
     toggleFootButton.onTrue(new FootToggleCommand(m_footSubsystem));
     balanceButton.onTrue(new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_kickSubsystem,
      m_xboxController1, false));
+    levelZeroButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelZeroTarget));
+    levelOneButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelOneTarget));
+    levelTwoButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelTwoTarget));
+    levelThreeButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelThreeTarget));
+
   }
 
   /**

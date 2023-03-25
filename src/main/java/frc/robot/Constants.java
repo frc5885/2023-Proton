@@ -60,6 +60,11 @@ public class Constants {
     public static final String kCrossLine = "Leave Community";
     public static final String kConekick = "Kick Cone";
 
+    public static final double levelZeroTarget = 0.0;
+    public static final double levelOneTarget = -42000.0;
+    public static final double levelTwoTarget = -98000.0;
+    public static final double levelThreeTarget = -118000.0;
+
     public static final int gripperOpenButton = 2; //X Button
     public static final int gripperCloseButton = 3; //Y Button
     public static final int armExtendButton = 1; //B Button
