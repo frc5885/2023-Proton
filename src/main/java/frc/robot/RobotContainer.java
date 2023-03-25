@@ -99,6 +99,9 @@ public class RobotContainer {
     Trigger armExtendButton = new JoystickButton(m_xboxController2, XboxController.Button.kB.value);
     Trigger gripperCloseButton = new JoystickButton(m_xboxController2, XboxController.Button.kX.value);
     Trigger gripperOpenButton = new JoystickButton(m_xboxController2, XboxController.Button.kY.value);
+
+    Trigger gripperToggleButton = new JoystickButton(m_xboxController2, XboxController.Button.kRightBumper.value);
+
     Trigger levelZeroButton = new JoystickButton(m_xboxController2, XboxController.Button.kA.value);
     Trigger levelOneButton = new JoystickButton(m_xboxController2, XboxController.Button.kX.value);
     Trigger levelTwoButton = new JoystickButton(m_xboxController2, XboxController.Button.kY.value);
@@ -112,6 +115,11 @@ public class RobotContainer {
     // armExtendButton.onTrue(new ArmExtendCommand(m_gripperSubsystem));
     // gripperCloseButton.onTrue(new GripperCloseCommand(m_gripperSubsystem));
     // gripperOpenButton.onTrue(new GripperOpenCommand(m_gripperSubsystem));
+
+    gripperToggleButton.onTrue(new GripperPickUpCommand(m_gripperSubsystem));
+    gripperToggleButton.onFalse(new GripperDropCommand(m_gripperSubsystem));
+
+    
     toggleFootButton.onTrue(new FootToggleCommand(m_footSubsystem));
     balanceButton.onTrue(new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_kickSubsystem,
      m_xboxController1, false));
@@ -139,6 +147,9 @@ public class RobotContainer {
 
       case Constants.kConekick:
         return new ConeKickCommand(m_kickSubsystem, true, m_drivingSubsystem);
+
+      case Constants.Level3:
+        return new Level3AutoCommand(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
 
       default:
         return null;

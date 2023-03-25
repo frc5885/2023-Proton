@@ -17,16 +17,17 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Relay;
 import frc.robot.Constants;
 
 public class FootSubsystem extends SubsystemBase {
     private DoubleSolenoid footSolenoid;    //open and closing gripper solenoid which controls valve
-    private DigitalOutput alertLight;
+    private Relay alertLight;
 
     public FootSubsystem() {
         footSolenoid = new DoubleSolenoid(Constants.PneumaticsID, PneumaticsModuleType.CTREPCM, 4, 5);
         addChild("footSolenoid", footSolenoid);
-        alertLight = new DigitalOutput(0);
+        alertLight = new Relay(0, Relay.Direction.kForward);
     }
 
     @Override
@@ -40,15 +41,13 @@ public class FootSubsystem extends SubsystemBase {
 
     public void retractFoot() {
         footSolenoid.set(Value.kForward);
-        alertLight.set(false);
-        System.out.println("light should be on!!!!!");
-        alertLight.set(true);
+        alertLight.set(Relay.Value.kOff);
 }
 
     public void extendFoot() {
         footSolenoid.set(Value.kReverse);
         System.out.println("light should be on!!!!!");
-        alertLight.set(true);
+        alertLight.set(Relay.Value.kOn);
     }
 
     public boolean isExtended() {

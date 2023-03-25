@@ -54,6 +54,7 @@ public class Robot extends TimedRobot {
         m_chooser.addOption(Constants.kBalance, Constants.kBalance);
         m_chooser.addOption(Constants.kCrossLine, Constants.kCrossLine);
         m_chooser.addOption(Constants.kConekick, Constants.kConekick);
+        m_chooser.addOption(Constants.Level3, Constants.Level3);
         SmartDashboard.putData("Autonomous Command", m_chooser);
     }
 

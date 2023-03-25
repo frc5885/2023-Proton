@@ -72,5 +72,9 @@ public class ArmSubsystem extends SubsystemBase {
     public void goToClosedLoopPosition(double targetPos){
         m_targetPos = targetPos;
     }
+
+    public double motorOutput(){
+        return armMotor.getMotorOutputPercent();
+    }
 }
 
