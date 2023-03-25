@@ -66,7 +66,7 @@ public class ArmSubsystem extends SubsystemBase {
     // here. Call these from Commands.
 
     public void drive(double motorSpeed, double speedFactor){
-        armMotor.set(PowerCurve.getPoint(motorSpeed, powerExp) * 0.5);
+        armMotor.set(ControlMode.PercentOutput, PowerCurve.getPoint(motorSpeed, powerExp) * 0.5);
     }
 
     public void goToClosedLoopPosition(double targetPos){

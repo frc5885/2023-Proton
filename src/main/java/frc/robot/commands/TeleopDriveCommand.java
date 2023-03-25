@@ -24,7 +24,7 @@ public class TeleopDriveCommand extends CommandBase {
      // Called every time the scheduler runs while the command is scheduled.
      @Override
      public void execute() {
-        boolean turboEngaged = m_xboxContoller.getLeftStickButton();
+        boolean turboEngaged = m_xboxContoller.getRightBumper();
         double speedFactor = (turboEngaged) ? Constants.turboDriveSpeedFactor : Constants.slowDriveSpeedFactor;
         double leftJoystickPos = m_xboxContoller.getRawAxis(Constants.LeftYAxis);
         double rightJoystickPos = m_xboxContoller.getRawAxis(Constants.RightYAxis);

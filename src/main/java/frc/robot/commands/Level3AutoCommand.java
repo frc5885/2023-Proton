@@ -34,21 +34,35 @@ public class Level3AutoCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        //Drive backwards
-        if (m_timer.get() < 0.5 ){
+        // //Drive backwards
+        // if (m_timer.get() < 1.5 ){
+        //     m_drivingSubsystem.drive(.75, .75, 1.0);
+        // }
+
+        // //Lift arm
+        // m_armSubsystem.goToClosedLoopPosition(Constants.levelThreeTarget);
+        
+        // //Drive forwards
+        // if (m_timer.get() < 5.0 ){
+        //     m_drivingSubsystem.drive(-.25, -.25, 1.0);
+        // }
+
+        // //Release gripper
+        // m_gripperSubsystem.closeGripper();
+
+        if (m_timer.get() < 0.9 ){
             m_drivingSubsystem.drive(.75, .75, 1.0);
         }
-
-        //Lift arm
-        m_armSubsystem.goToClosedLoopPosition(Constants.levelThreeTarget);
-        
-        //Drive forwards
-        if (m_timer.get() < 2 ){
-            m_drivingSubsystem.drive(-.25, -.25, 1.0);
+        else{
+            m_armSubsystem.goToClosedLoopPosition(Constants.levelThreeTarget);
+            if (m_timer.get() < 6 ){
+                    m_drivingSubsystem.drive(-.5, -.5, 1.0);
+                }
+            else{
+                m_drivingSubsystem.drive(0, 0, 1);
+                m_gripperSubsystem.closeGripper();
+            }
         }
-
-        //Release gripper
-        m_gripperSubsystem.openGripper();
 
     }
 
