@@ -1,19 +1,26 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+
 import java.util.function.*;
 import frc.robot.subsystems.DrivingSubsystem;
+import frc.robot.subsystems.FlapSubsystem;
 import frc.robot.Constants;
 
 public class TeleopDriveCommand extends CommandBase {
 
     private final DrivingSubsystem m_drivingSubsystem;
     private final XboxController m_xboxContoller; 
+    private final FlapSubsystem m_flapSubsystem;
 
      // Called when the command is initially scheduled.
-    public TeleopDriveCommand(DrivingSubsystem drivingSubsystem, XboxController controller) {
+    public TeleopDriveCommand(FlapSubsystem flapSubsystem, DrivingSubsystem drivingSubsystem, 
+        XboxController controller) {
+        m_flapSubsystem = flapSubsystem;
         m_drivingSubsystem = drivingSubsystem;
         m_xboxContoller = controller;
+        addRequirements(m_flapSubsystem);
         addRequirements(m_drivingSubsystem);
      }
 
@@ -29,6 +36,13 @@ public class TeleopDriveCommand extends CommandBase {
         double leftJoystickPos = m_xboxContoller.getRawAxis(Constants.LeftYAxis);
         double rightJoystickPos = m_xboxContoller.getRawAxis(Constants.RightYAxis);
         m_drivingSubsystem.drive(leftJoystickPos, rightJoystickPos, speedFactor);
+        if (m_flapSubsystem.isLowered()){
+            m_xboxContoller.setRumble(RumbleType.kBothRumble, 1);
+        }
+        else{
+            m_xboxContoller.setRumble(RumbleType.kBothRumble, 0);
+        }
+
      }
  
      // Called once the command ends or is interrupted.

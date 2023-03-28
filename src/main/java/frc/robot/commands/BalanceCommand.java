@@ -5,14 +5,14 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.DrivingSubsystem;
 import frc.robot.subsystems.FootSubsystem;
-import frc.robot.subsystems.CubeKickSubsystem;
+import frc.robot.subsystems.GripperSubsystem;
 import frc.robot.SwitchController;
 import frc.robot.Constants;
 
 public class BalanceCommand extends CommandBase {
     private final DrivingSubsystem m_drivingSubsystem;
     private final FootSubsystem m_FootSubsystem;
-    private final CubeKickSubsystem m_kickSubsystem;
+    private final GripperSubsystem m_kickSubsystem;
     private final XboxController m_controller;
 
     // Does the power calculation for a given ramp angle
@@ -30,7 +30,7 @@ public class BalanceCommand extends CommandBase {
     private boolean m_kickCube = false;    
     
     public BalanceCommand(DrivingSubsystem drivingSubsystem, FootSubsystem footSubsystem,
-        CubeKickSubsystem kickSubsystem, XboxController controller, boolean kickCube) {
+        GripperSubsystem kickSubsystem, XboxController controller, boolean kickCube) {
         m_drivingSubsystem = drivingSubsystem;
         m_FootSubsystem = footSubsystem;
         m_kickSubsystem = kickSubsystem;
@@ -64,11 +64,12 @@ public class BalanceCommand extends CommandBase {
         if (m_kickCube)
         {
             // kick the cube at the start of autonomous
-            m_kickSubsystem.extendKicker();
+            m_kickSubsystem.extendArm();
             m_kickCube = false;
         }
 
         if (m_delay.get() > 1){
+            m_kickSubsystem.retractArm();
             if (m_onRamp)
             {
                 // Controller for balancing on the charger

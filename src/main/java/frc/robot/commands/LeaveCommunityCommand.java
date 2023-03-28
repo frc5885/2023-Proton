@@ -2,18 +2,18 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.DrivingSubsystem;
-import frc.robot.subsystems.CubeKickSubsystem;
+import frc.robot.subsystems.GripperSubsystem;
 
 public class LeaveCommunityCommand extends CommandBase {
     private final DrivingSubsystem m_drivingSubsystem;
-    private final CubeKickSubsystem m_kickSubsystem;
+    private final GripperSubsystem m_kickSubsystem;
 
     // Does the power calculation for a given ramp angle
     private final Timer m_delay = new Timer();
     boolean m_timerStarted = false;
     private boolean m_kickCube = false;    
     
-    public LeaveCommunityCommand(CubeKickSubsystem kickSubsystem, boolean kickCube, DrivingSubsystem drivingSubsystem) {
+    public LeaveCommunityCommand(GripperSubsystem kickSubsystem, boolean kickCube, DrivingSubsystem drivingSubsystem) {
         m_kickSubsystem = kickSubsystem;
         m_drivingSubsystem = drivingSubsystem;
         m_kickCube = kickCube;
@@ -33,11 +33,12 @@ public class LeaveCommunityCommand extends CommandBase {
         if (m_kickCube)
         {
             // kick the cube at the start of autonomous
-            m_kickSubsystem.extendKicker();
+            m_kickSubsystem.extendArm();
             m_kickCube = false;
         }
 
         if (m_delay.get() > 1 ){
+            m_kickSubsystem.retractArm();
             m_drivingSubsystem.drive(-.75, -.75, 1.0);
         }
     }

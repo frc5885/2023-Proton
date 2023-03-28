@@ -49,7 +49,7 @@ public class RobotContainer {
   public final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   public final DrivingSubsystem m_drivingSubsystem = new DrivingSubsystem();
   public final FootSubsystem m_footSubsystem = new FootSubsystem();
-  public final CubeKickSubsystem m_kickSubsystem = new CubeKickSubsystem();
+  public final FlapSubsystem m_flapSubsystem = new FlapSubsystem();
 
   public final UsbCamera m_usbCamera;
 
@@ -69,9 +69,11 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    m_drivingSubsystem.setDefaultCommand(new TeleopDriveCommand (m_drivingSubsystem, m_xboxController1));
+    m_drivingSubsystem.setDefaultCommand(new TeleopDriveCommand (m_flapSubsystem, 
+      m_drivingSubsystem, m_xboxController1));
     m_gripperSubsystem.setDefaultCommand(new GripperOpenCommand(m_gripperSubsystem));
-    m_armSubsystem.setDefaultCommand(new MoveArmCommand(m_armSubsystem, m_xboxController2));
+    m_armSubsystem.setDefaultCommand(new MoveArmCommand(m_flapSubsystem,
+      m_armSubsystem, m_xboxController2));
     // m_armSubsystem.setDefaultCommand(new ArmExtendCommand(m_gripperSubsystem));
     // m_footSubsystem.setDefaultCommand(new FootToggleCommand(m_footSubsystem));
 
@@ -110,6 +112,7 @@ public class RobotContainer {
     // Controller 1
     Trigger toggleFootButton = new JoystickButton(m_xboxController1, XboxController.Button.kStart.value);
     Trigger balanceButton = new JoystickButton(m_xboxController1, XboxController.Button.kB.value);
+    Trigger flapButton = new JoystickButton(m_xboxController1, XboxController.Button.kLeftBumper.value);
 
     // armRetractButton.onTrue(new ArmRetractCommand(m_gripperSubsystem));
     // armExtendButton.onTrue(new ArmExtendCommand(m_gripperSubsystem));
@@ -119,14 +122,15 @@ public class RobotContainer {
     gripperToggleButton.onTrue(new GripperDropCommand(m_gripperSubsystem));
     gripperToggleButton.onFalse(new GripperPickUpCommand(m_gripperSubsystem));
 
-    
+    flapButton.onTrue(new FlapCommand(m_flapSubsystem));
+
     toggleFootButton.onTrue(new FootToggleCommand(m_footSubsystem));
-    balanceButton.onTrue(new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_kickSubsystem,
+    balanceButton.onTrue(new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_gripperSubsystem,
      m_xboxController1, false));
-    levelZeroButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelZeroTarget));
-    levelOneButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelOneTarget));
-    levelTwoButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelTwoTarget));
-    levelThreeButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelThreeTarget));
+    levelZeroButton.onTrue(new MoveArmToLevelCommand(m_flapSubsystem, m_armSubsystem, Constants.levelZeroTarget));
+    levelOneButton.onTrue(new MoveArmToLevelCommand(m_flapSubsystem, m_armSubsystem, Constants.levelOneTarget));
+    levelTwoButton.onTrue(new MoveArmToLevelCommand(m_flapSubsystem, m_armSubsystem, Constants.levelTwoTarget));
+    levelThreeButton.onTrue(new MoveArmToLevelCommand(m_flapSubsystem, m_armSubsystem, Constants.levelThreeTarget));
 
   }
 
@@ -139,14 +143,14 @@ public class RobotContainer {
     // The selected command will be run in autonomous
     switch (autoSelected){
       case Constants.kBalance:
-        return new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_kickSubsystem,
+        return new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_gripperSubsystem,
         null, true);
 
       case Constants.kCrossLine:
-        return new LeaveCommunityCommand(m_kickSubsystem, true, m_drivingSubsystem);
+        return new LeaveCommunityCommand(m_gripperSubsystem, true, m_drivingSubsystem);
 
       case Constants.kConekick:
-        return new ConeKickCommand(m_kickSubsystem, true, m_drivingSubsystem);
+        return new ConeKickCommand(m_gripperSubsystem, true, m_drivingSubsystem);
 
       case Constants.Level3:
         return new Level3AutoCommand(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
