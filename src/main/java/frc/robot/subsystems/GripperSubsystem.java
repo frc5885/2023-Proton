@@ -58,29 +58,29 @@ public class GripperSubsystem extends SubsystemBase {
     //TODO Make close, open, extend, retratc functions and then make them interact
     public void closeGripper(){
         //Gripper isn't closed
-        if(gripSolenoid.get() != Value.kForward){
-            gripSolenoid.set(Value.kForward);
-        }
-    }
-
-    public void openGripper(){
-        //Gripper isn't closed
         if(gripSolenoid.get() != Value.kReverse){
             gripSolenoid.set(Value.kReverse);
         }
     }
 
+    public void openGripper(){
+        //Gripper isn't closed
+        if(gripSolenoid.get() != Value.kForward){
+            gripSolenoid.set(Value.kForward);
+        }
+    }
+
     public void retractArm(){
         //Gripper isn't closed
-        if(armSolenoid.get() != Value.kReverse){
-            armSolenoid.set(Value.kReverse);
+        if(armSolenoid.get() != Value.kForward){
+            armSolenoid.set(Value.kForward);
         }
     }
 
     public void extendArm(){
         //Gripper isn't closed
-        if(armSolenoid.get() != Value.kForward){
-            armSolenoid.set(Value.kForward);
+        if(armSolenoid.get() != Value.kReverse){
+            armSolenoid.set(Value.kReverse);
         }
     }
 

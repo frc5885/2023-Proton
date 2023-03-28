@@ -116,8 +116,8 @@ public class RobotContainer {
     // gripperCloseButton.onTrue(new GripperCloseCommand(m_gripperSubsystem));
     // gripperOpenButton.onTrue(new GripperOpenCommand(m_gripperSubsystem));
 
-    gripperToggleButton.onTrue(new GripperPickUpCommand(m_gripperSubsystem));
-    gripperToggleButton.onFalse(new GripperDropCommand(m_gripperSubsystem));
+    gripperToggleButton.onTrue(new GripperDropCommand(m_gripperSubsystem));
+    gripperToggleButton.onFalse(new GripperPickUpCommand(m_gripperSubsystem));
 
     
     toggleFootButton.onTrue(new FootToggleCommand(m_footSubsystem));

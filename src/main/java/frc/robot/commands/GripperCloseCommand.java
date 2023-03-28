@@ -18,7 +18,7 @@ public class GripperCloseCommand extends CommandBase {
      // Called every time the scheduler runs while the command is scheduled.
      @Override
      public void execute() {
-        m_gripperSubsystem.closeGripper();
+        // m_gripperSubsystem.closeGripper();
      }
  
      // Called once the command ends or is interrupted.

@@ -7,19 +7,17 @@ import frc.robot.Constants;
 
 public class GripperPickUpCommand extends CommandBase {
     enum GripperState {
-        Initial,
-        Closed,
-        Open,
-        Extended,
-        Retracted,
+        CLOSE,
+        RETRACT,
+        FINISH,
     };
     
     private final GripperSubsystem m_gripperSubsystem;
     private final Timer m_timer = new Timer();
-    private final double m_dwellTime = 1.0;
+    private final double m_dwellTime = .25;
 
     // Assume the gripper is closed initially
-    private  GripperState m_state = GripperState.Initial;
+    private  GripperState m_nextState = GripperState.CLOSE;
 
     public GripperPickUpCommand (GripperSubsystem gripperSubsystem) {
         m_gripperSubsystem = gripperSubsystem;
@@ -28,59 +26,20 @@ public class GripperPickUpCommand extends CommandBase {
 
     @Override
      public void initialize() {
-        m_timer.reset();
-        m_state = GripperState.Initial;
+        m_nextState = GripperState.CLOSE;
      }
  
-     // Called every time the scheduler runs while the command is scheduled.
      @Override
      public void execute() {
-        switch (m_state)
-        {
-        case Initial:
-            m_gripperSubsystem.openGripper();
-            m_state = GripperState.Open;
+        if (m_nextState == GripperState.CLOSE) {
+            m_gripperSubsystem.closeGripper();
+            m_nextState = GripperState.RETRACT;
             m_timer.reset();
             m_timer.start();
-            System.out.println("Gripper Open");
-            break;
-
-        case Open:
-            if (m_timer.get() > m_dwellTime) {
-                m_gripperSubsystem.extendArm();
-                m_state = GripperState.Extended;
-                m_timer.reset();
-                m_timer.start();
-                System.out.println("Gripper Extended");
-            }
-            break;  
-
-        case Extended:
-            if (m_timer.get() > m_dwellTime) {
-                m_gripperSubsystem.closeGripper();
-                m_state = GripperState.Closed;
-                m_timer.reset();
-                m_timer.start();
-                System.out.println("Gripper Closed");
-            }
-            break;
-
-        case Closed:
-            if (m_timer.get() > m_dwellTime) {
-                m_gripperSubsystem.retractArm();
-                m_state = GripperState.Retracted;
-                m_timer.reset();
-                m_timer.start();
-                System.out.println("Gripper Retracted");
-            }
-            break;  
-
-        default:    // Retracted
-            break;  // do nothing
+        } else if (m_nextState == GripperState.RETRACT && m_timer.get() >= m_dwellTime) {
+            m_gripperSubsystem.retractArm();
+            m_nextState = GripperState.FINISH;
         }
-
-        System.out.println("Timer = " + m_timer.get());
-
     }
  
      // Called once the command ends or is interrupted.
@@ -91,7 +50,7 @@ public class GripperPickUpCommand extends CommandBase {
      // Returns true when the command should end.
      @Override
      public boolean isFinished() {
-         return false;
+        return m_nextState == GripperState.FINISH;
      }
  
      @Override
