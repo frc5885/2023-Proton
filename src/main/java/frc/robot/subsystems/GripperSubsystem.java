@@ -77,11 +77,19 @@ public class GripperSubsystem extends SubsystemBase {
         }
     }
 
+    public void extendKicker(){
+        retractArm();
+    }
+    
     public void extendArm(){
         //Gripper isn't closed
         if(armSolenoid.get() != Value.kReverse){
             armSolenoid.set(Value.kReverse);
         }
+    }
+
+    public void retractKicker(){
+        extendArm();
     }
 
 

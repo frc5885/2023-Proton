@@ -35,7 +35,26 @@ public class TeleopDriveCommand extends CommandBase {
         double speedFactor = (turboEngaged) ? Constants.turboDriveSpeedFactor : Constants.slowDriveSpeedFactor;
         double leftJoystickPos = m_xboxContoller.getRawAxis(Constants.LeftYAxis);
         double rightJoystickPos = m_xboxContoller.getRawAxis(Constants.RightYAxis);
-        m_drivingSubsystem.drive(leftJoystickPos, rightJoystickPos, speedFactor);
+        double rightTriggerPos = m_xboxContoller.getRightTriggerAxis();
+        double leftTriggerPos = m_xboxContoller.getLeftTriggerAxis();
+
+        // Initialize speeds to joystick positions
+        double leftSpeed = leftJoystickPos;
+        double rightSpeed = rightJoystickPos;
+        
+        // if the right trigger is pressed, drive the robot straight
+        if (rightTriggerPos > 0.05) 
+        {
+            leftSpeed = -rightTriggerPos;
+            rightSpeed = -rightTriggerPos;
+        }
+        else if (leftTriggerPos > 0.05)
+        {
+            leftSpeed = leftTriggerPos;
+            rightSpeed = leftTriggerPos;
+        }
+
+        m_drivingSubsystem.drive(leftSpeed, rightSpeed, speedFactor);
         if (m_flapSubsystem.isLowered()){
             m_xboxContoller.setRumble(RumbleType.kBothRumble, 1);
         }

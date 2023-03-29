@@ -33,12 +33,11 @@ public class LeaveCommunityCommand extends CommandBase {
         if (m_kickCube)
         {
             // kick the cube at the start of autonomous
-            m_kickSubsystem.extendArm();
+            m_kickSubsystem.extendKicker();
             m_kickCube = false;
         }
 
         if (m_delay.get() > 1 ){
-            m_kickSubsystem.retractArm();
             m_drivingSubsystem.drive(-.75, -.75, 1.0);
         }
     }

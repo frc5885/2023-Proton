@@ -64,12 +64,11 @@ public class BalanceCommand extends CommandBase {
         if (m_kickCube)
         {
             // kick the cube at the start of autonomous
-            m_kickSubsystem.extendArm();
+            m_kickSubsystem.extendKicker();
             m_kickCube = false;
         }
 
         if (m_delay.get() > 1){
-            m_kickSubsystem.retractArm();
             if (m_onRamp)
             {
                 // Controller for balancing on the charger

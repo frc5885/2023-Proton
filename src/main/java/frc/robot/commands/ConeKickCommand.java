@@ -34,7 +34,7 @@ public class ConeKickCommand extends CommandBase {
         if (m_kickCube)
         {
             // kick the cube at the start of autonomous
-            m_kickSubsystem.extendArm();
+            m_kickSubsystem.extendKicker();
             m_kickCube = false;
         }
     }
@@ -42,7 +42,7 @@ public class ConeKickCommand extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_kickSubsystem.retractArm();
+        
     }
 
     // Returns true when the command should end.
