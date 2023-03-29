@@ -30,7 +30,8 @@ public class MoveArmCommand extends CommandBase {
        double leftJoystickPos = m_xboxContoller.getRawAxis(Constants.LeftYAxis);
 
        //before the arm moves, flaps have to be lowered or they will interfere with arm
-       if (!m_flapSubsystem.isLowered() && Math.abs(leftJoystickPos) >= 0.05){
+       if (!m_flapSubsystem.isLowered() && Math.abs(leftJoystickPos) >= 0.1){
+        System.out.println("The arm caused the flaps to lower");
         m_flapSubsystem.lowerFlaps();
        }
        m_armSubsystem.drive(leftJoystickPos, speedFactor);

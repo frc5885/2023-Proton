@@ -153,7 +153,7 @@ public class RobotContainer {
         return new ConeKickCommand(m_gripperSubsystem, true, m_drivingSubsystem);
 
       case Constants.Level3:
-        return new Level3AutoCommand(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
+        return new Level3AutoCommand(/*m_flapSubsystem,*/ m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
 
       default:
         return null;
