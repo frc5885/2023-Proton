@@ -66,7 +66,7 @@ public class Level3AutoCommand extends CommandBase {
                 }
             else{
                 m_drivingSubsystem.drive(0, 0, 1);
-                m_gripperSubsystem.closeGripper();
+                m_gripperSubsystem.openGripper();
             }
         }
 
