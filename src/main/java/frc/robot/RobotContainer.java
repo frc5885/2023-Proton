@@ -51,7 +51,7 @@ public class RobotContainer {
   public final FootSubsystem m_footSubsystem = new FootSubsystem();
   public final FlapSubsystem m_flapSubsystem = new FlapSubsystem();
 
-  public final UsbCamera m_usbCamera;
+  // public final UsbCamera m_usbCamera;
 
   // Joysticks
   private final XboxController m_xboxController1 = new XboxController(0);
@@ -65,7 +65,7 @@ public class RobotContainer {
   */
   private RobotContainer() {
 
-    m_usbCamera = CameraServer.startAutomaticCapture();
+    // m_usbCamera = CameraServer.startAutomaticCapture();
     // Configure the button bindings
     configureButtonBindings();
 
@@ -139,25 +139,27 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
   */
-  public Command getAutonomousCommand(String autoSelected) {
+  public Command getAutonomousCommand(String autoSelected) {      
+    // return new Level3AutoCommand(m_flapSubsystem, m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
+    return new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_gripperSubsystem,null, true);
     // The selected command will be run in autonomous
-    switch (autoSelected){
-      case Constants.kBalance:
-        return new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_gripperSubsystem,
-        null, true);
+    // switch (autoSelected){
+    //   case Constants.kBalance:
+    //     return new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_gripperSubsystem,
+    //     null, true);
 
-      case Constants.kCrossLine:
-        return new LeaveCommunityCommand(m_gripperSubsystem, true, m_drivingSubsystem);
+    //   case Constants.kCrossLine:
+    //     return new LeaveCommunityCommand(m_gripperSubsystem, true, m_drivingSubsystem);
 
-      case Constants.kConekick:
-        return new ConeKickCommand(m_gripperSubsystem, true, m_drivingSubsystem);
+    //   case Constants.kConekick:
+    //     return new ConeKickCommand(m_gripperSubsystem, true, m_drivingSubsystem);
 
-      case Constants.Level3:
-        return new Level3AutoCommand(m_flapSubsystem, m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
+    //   case Constants.Level3:
+    //     return new Level3AutoCommand(m_flapSubsystem, m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
 
-      default:
-        return null;
-    }
+    //   default:
+    //     return null;
+    // }
   }
   
   public void retractFoot(){

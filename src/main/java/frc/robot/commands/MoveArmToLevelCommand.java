@@ -30,13 +30,13 @@ public class MoveArmToLevelCommand extends CommandBase {
         m_timer.start();
 
         //before the arm moves, flaps have to be lowered or they will interfere with arm
-        if (!m_flapSubsystem.isLowered()){
-            System.out.println("\n\n\n!!!!!! The Arm lowered the Flaps!!!!!!\n\n\n");
-            m_flapSubsystem.lowerFlaps();
-        }
-        if (m_timer.get() >= 0.1){
+        // if (!m_flapSubsystem.isLowered()){
+        //     System.out.println("\n\n\n!!!!!! The Arm lowered the Flaps!!!!!!\n\n\n");
+        //     m_flapSubsystem.lowerFlaps();
+        // }
+        // if (m_timer.get() >= 0.1){
             m_armSubsystem.goToClosedLoopPosition(m_targetPos);
-        }
+        // }
     }
 
     // Called once the command ends or is interrupted.

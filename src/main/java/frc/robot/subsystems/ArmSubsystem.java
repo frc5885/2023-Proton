@@ -52,7 +52,7 @@ public class ArmSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         armMotor.set(ControlMode.Position, m_targetPos, DemandType.AuxPID, m_targetPos);
-        double encoderValue = armMotor.getSelectedSensorPosition(1);
+        //double encoderValue = armMotor.getSelectedSensorPosition(1);
  //       System.out.println("Encoder Value: " + encoderValue);
     }
 

@@ -7,6 +7,7 @@ import frc.robot.Constants;
 
 public class GripperPickUpCommand extends CommandBase {
     enum GripperState {
+        EXTEND,
         CLOSE,
         RETRACT,
         FINISH,
@@ -26,17 +27,21 @@ public class GripperPickUpCommand extends CommandBase {
 
     @Override
      public void initialize() {
-        m_nextState = GripperState.CLOSE;
+        m_nextState = GripperState.EXTEND;
      }
  
      @Override
      public void execute() {
-        if (m_nextState == GripperState.CLOSE) {
-            m_gripperSubsystem.closeGripper();
-            m_nextState = GripperState.RETRACT;
+        if ( m_nextState == GripperState.EXTEND) {
+            m_gripperSubsystem.extendArm();
+            m_nextState = GripperState.CLOSE;
             m_timer.reset();
             m_timer.start();
-        } else if (m_nextState == GripperState.RETRACT && m_timer.get() >= m_dwellTime) {
+        }
+        else if (m_nextState == GripperState.CLOSE && m_timer.get() >= m_dwellTime) {
+            m_gripperSubsystem.closeGripper();
+            m_nextState = GripperState.RETRACT;
+        } else if (m_nextState == GripperState.RETRACT && m_timer.get() >= (m_dwellTime * 2)) {
             m_gripperSubsystem.retractArm();
             m_nextState = GripperState.FINISH;
         }

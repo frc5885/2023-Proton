@@ -32,15 +32,8 @@ public class GripperDropCommand extends CommandBase {
      // Called every time the scheduler runs while the command is scheduled.
      @Override
      public void execute() {
-        if (m_nextState == GripperState.OPEN) {
             m_gripperSubsystem.openGripper();
-            m_nextState = GripperState.EXTEND;
-            m_timer.reset();
-            m_timer.start();
-        } else if (m_nextState == GripperState.EXTEND && m_timer.get() >= m_dwellTime) {
-            m_gripperSubsystem.extendArm();
             m_nextState = GripperState.FINISH;
-        }
     }
  
      // Called once the command ends or is interrupted.

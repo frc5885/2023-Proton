@@ -57,13 +57,19 @@ public class Level3AutoCommand extends CommandBase {
         if (m_timer.get() < 0.9){
             m_drivingSubsystem.drive(.75, .75, 1.0);
         }
-        else if (m_timer.get() > 0.95){
-            m_flapSubsystem.lowerFlaps();
+        else if (m_timer.get() > .9 && m_timer.get() < 3.0)
+        {
+            //dwell
+            m_drivingSubsystem.drive(0, 0, 1);
+        }
+        else if (m_timer.get() > 3.0){
+            //m_flapSubsystem.lowerFlaps();
         // else{
             m_armSubsystem.goToClosedLoopPosition(Constants.levelThreeTarget);
-            if (m_timer.get() < 6 ){
-                    m_drivingSubsystem.drive(-.5, -.5, 1.0);
-                }
+            
+            if (m_timer.get() < 6.0 ){
+                m_drivingSubsystem.drive(-.6, -.6, 1.0);
+            }
             else{
                 m_drivingSubsystem.drive(0, 0, 1);
                 m_gripperSubsystem.openGripper();

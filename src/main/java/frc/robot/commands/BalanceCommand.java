@@ -17,8 +17,8 @@ public class BalanceCommand extends CommandBase {
 
     // Does the power calculation for a given ramp angle
     private final SwitchController m_switchController = new SwitchController();
-    private final double m_rampAngle = 10.0;
-    private final double m_flatSpeed = .95;
+    private final double m_rampAngle = 14.0;
+    private final double m_flatSpeed = 0.85;
     private final double m_powerScale = 1.02;  // scale output up/down quickly
     private boolean m_isCancelled = false;
     private double m_angle = 0.0;
