@@ -9,7 +9,7 @@ import frc.robot.subsystems.FlapSubsystem;
 import frc.robot.Constants;
 
 public class Level3AutoCommand extends CommandBase {
-    // private final FlapSubsystem  m_flapSubsystem;
+    private final FlapSubsystem  m_flapSubsystem;
     private final DrivingSubsystem m_drivingSubsystem;
     private final ArmSubsystem m_armSubsystem;
     private final GripperSubsystem m_gripperSubsystem;
@@ -17,8 +17,8 @@ public class Level3AutoCommand extends CommandBase {
     // Does the power calculation for a given ramp angle
     private final Timer m_timer = new Timer();  
     
-    public Level3AutoCommand(/*FlapSubsystem flapSubsystem, */ ArmSubsystem armSubsystem, GripperSubsystem gripperSubsystem, DrivingSubsystem drivingSubsystem) {
-        // m_flapSubsystem = flapSubsystem;
+    public Level3AutoCommand(FlapSubsystem flapSubsystem, ArmSubsystem armSubsystem, GripperSubsystem gripperSubsystem, DrivingSubsystem drivingSubsystem) {
+        m_flapSubsystem = flapSubsystem;
         m_armSubsystem = armSubsystem;
         m_gripperSubsystem = gripperSubsystem;
         m_drivingSubsystem = drivingSubsystem;
@@ -57,9 +57,9 @@ public class Level3AutoCommand extends CommandBase {
         if (m_timer.get() < 0.9){
             m_drivingSubsystem.drive(.75, .75, 1.0);
         }
-        // else if (m_timer.get() > 0.95){
-        //     m_flapSubsystem.lowerFlaps();
-        else{
+        else if (m_timer.get() > 0.95){
+            m_flapSubsystem.lowerFlaps();
+        // else{
             m_armSubsystem.goToClosedLoopPosition(Constants.levelThreeTarget);
             if (m_timer.get() < 6 ){
                     m_drivingSubsystem.drive(-.5, -.5, 1.0);

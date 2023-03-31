@@ -31,6 +31,7 @@ public class MoveArmToLevelCommand extends CommandBase {
 
         //before the arm moves, flaps have to be lowered or they will interfere with arm
         if (!m_flapSubsystem.isLowered()){
+            System.out.println("\n\n\n!!!!!! The Arm lowered the Flaps!!!!!!\n\n\n");
             m_flapSubsystem.lowerFlaps();
         }
         if (m_timer.get() >= 0.1){
@@ -47,8 +48,11 @@ public class MoveArmToLevelCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (m_armSubsystem.motorOutput() == 0 && m_timer.get() > 0.5)
+        if (m_armSubsystem.motorOutput() == 0 && m_timer.get() > 0.2) {
+            System.out.println("\n\n%%%% Arm has reached position %%%%\n\n");
             return true;
+        }
+
         return false;
     }
 

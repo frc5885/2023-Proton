@@ -29,9 +29,11 @@ public class FlapCommand extends CommandBase {
         if (!m_finished) {
             if (m_flapSubsystem.isLowered()) {
                 m_flapSubsystem.raiseFlaps();
+                System.out.println("\n\n\n***FLAP Raised****\n\n\n");
             }
             else {
                 m_flapSubsystem.lowerFlaps();
+                System.out.println("***FLAP Lowered****");
             }
             m_finished = true;
         }
