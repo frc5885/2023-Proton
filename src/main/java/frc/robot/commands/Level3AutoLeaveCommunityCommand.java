@@ -75,10 +75,10 @@ public class Level3AutoLeaveCommunityCommand extends CommandBase {
                 m_gripperSubsystem.openGripper();
             }
         }
-        else if (m_timer.get() > 6.5 && m_timer.get() < 10.75){
-            m_drivingSubsystem.drive(.75, .75, 1.0);
-            m_gripperSubsystem.closeGripper();
-            if (m_timer.get() > 7.5) {
+        else if (m_timer.get() > 9.5 && m_timer.get() < 13.75){
+            m_drivingSubsystem.drive(.75, .73, 1.0);
+            if (m_timer.get() > 10.5) {
+                m_gripperSubsystem.closeGripper();
                 m_armSubsystem.goToClosedLoopPosition(Constants.levelZeroTarget);
             }
         }
@@ -98,8 +98,7 @@ public class Level3AutoLeaveCommunityCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        boolean finished = (m_timer.get() > 11);
-        return finished;
+        return false;
     }
 
 

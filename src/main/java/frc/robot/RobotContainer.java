@@ -140,7 +140,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
   */
   public Command getAutonomousCommand(String autoSelected) {      
-    return new Level3AutoLeaveCommunityCommand(m_flapSubsystem, m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
+    return new Level3AutoCommand(m_flapSubsystem, m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
     // return new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_gripperSubsystem,null, true);
     // The selected command will be run in autonomous
     // switch (autoSelected){
