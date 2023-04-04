@@ -120,12 +120,12 @@ public class RobotContainer {
     // gripperOpenButton.onTrue(new GripperOpenCommand(m_gripperSubsystem));
 
     gripperToggleButton.onTrue(new GripperDropCommand(m_gripperSubsystem));
-    gripperToggleButton.onFalse(new GripperPickUpCommand(m_gripperSubsystem));
+    gripperToggleButton.onFalse(new GripperPickUpCmdGroup(m_gripperSubsystem));
 
     flapButton.onTrue(new FlapCommand(m_flapSubsystem));
 
     toggleFootButton.onTrue(new FootToggleCommand(m_footSubsystem));
-    balanceButton.onTrue(new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_gripperSubsystem,
+    balanceButton.onTrue(new BalanceCommand(m_drivingSubsystem, m_footSubsystem,
      m_xboxController1, false));
     levelZeroButton.onTrue(new MoveArmToLevelCommand(m_flapSubsystem, m_armSubsystem, Constants.levelZeroTarget));
     levelOneButton.onTrue(new MoveArmToLevelCommand(m_flapSubsystem, m_armSubsystem, Constants.levelOneTarget));
@@ -140,26 +140,28 @@ public class RobotContainer {
    * @return the command to run in autonomous
   */
   public Command getAutonomousCommand(String autoSelected) {      
-    return new Level3AutoCommand(m_flapSubsystem, m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
+    // return new Level3AutoLeaveCommunityCommand(m_flapSubsystem, m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
     // return new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_gripperSubsystem,null, true);
     // The selected command will be run in autonomous
-    // switch (autoSelected){
-    //   case Constants.kBalance:
-    //     return new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_gripperSubsystem,
-    //     null, true);
+    switch (autoSelected){
+      case Constants.kBalance:
+        return new 
 
-    //   case Constants.kCrossLine:
-    //     return new LeaveCommunityCommand(m_gripperSubsystem, true, m_drivingSubsystem);
+      case Constants.kCrossLine:
+        return new LeaveCommunityCommand(m_gripperSubsystem, true, m_drivingSubsystem);
 
-    //   case Constants.kConekick:
-    //     return new ConeKickCommand(m_gripperSubsystem, true, m_drivingSubsystem);
+      case Constants.kConekick:
+        return new ConeKickCommand(m_gripperSubsystem, true, m_drivingSubsystem);
 
-    //   case Constants.Level3:
-    //     return new Level3AutoCommand(m_flapSubsystem, m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
+      case Constants.kLevel3:
+        return new Level3AutoCommand(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
 
-    //   default:
-    //     return null;
-    // }
+      case Constants.kCubeCrossLine:
+        return new Level3AutoLeaveCommunityCommand( m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
+
+      default:
+        return null;
+    }
   }
   
   public void retractFoot(){

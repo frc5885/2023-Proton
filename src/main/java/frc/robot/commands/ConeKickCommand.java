@@ -5,38 +5,27 @@ import frc.robot.subsystems.DrivingSubsystem;
 import frc.robot.subsystems.GripperSubsystem;
 
 public class ConeKickCommand extends CommandBase {
-    private final DrivingSubsystem m_drivingSubsystem;
-    private final GripperSubsystem m_kickSubsystem;
+    private final GripperSubsystem m_gripperSubsystem;
 
     // Does the power calculation for a given ramp angle
-    private final Timer m_delay = new Timer();
-    boolean m_timerStarted = false;
-    private boolean m_kickCube = false;    
-    
-    public ConeKickCommand(GripperSubsystem kickSubsystem, boolean kickCube, DrivingSubsystem drivingSubsystem) {
-        m_kickSubsystem = kickSubsystem;
-        m_drivingSubsystem = drivingSubsystem;
-        m_kickCube = kickCube;
-        addRequirements(m_drivingSubsystem);
+    private final Timer m_timer = new Timer();    
+    public ConeKickCommand(GripperSubsystem kickSubsystem) {
+        m_gripperSubsystem = kickSubsystem;
+
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_delay.reset();
-        m_delay.start();
-       return;
+        m_timer.reset();
+        m_timer.start();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (m_kickCube)
-        {
-            // kick the cube at the start of autonomous
-            m_kickSubsystem.extendKicker();
-            m_kickCube = false;
-        }
+        // kick the cone at the start of autonomous
+        m_gripperSubsystem.extendKicker();
     }
 
     // Called once the command ends or is interrupted.
@@ -48,7 +37,7 @@ public class ConeKickCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        boolean isFinished = (m_delay.get() > 1);
+        boolean isFinished = (m_timer.get() > 1);
         return isFinished;
     }
 

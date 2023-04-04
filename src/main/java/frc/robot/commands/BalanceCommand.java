@@ -12,7 +12,6 @@ import frc.robot.Constants;
 public class BalanceCommand extends CommandBase {
     private final DrivingSubsystem m_drivingSubsystem;
     private final FootSubsystem m_FootSubsystem;
-    private final GripperSubsystem m_kickSubsystem;
     private final XboxController m_controller;
 
     // Does the power calculation for a given ramp angle
@@ -26,16 +25,15 @@ public class BalanceCommand extends CommandBase {
     private final Timer m_timer = new Timer();
     private final Timer m_delay = new Timer();
     boolean m_timerStarted = false;
-    private final double m_stopTime = 2;
-    private boolean m_kickCube = false;    
+    private final double m_stopTime = 2;  
+    double m_direction = 1.0; //1 = forward and -1 = reverse
     
     public BalanceCommand(DrivingSubsystem drivingSubsystem, FootSubsystem footSubsystem,
-        GripperSubsystem kickSubsystem, XboxController controller, boolean kickCube) {
+        XboxController controller, boolean isReversed) {
         m_drivingSubsystem = drivingSubsystem;
         m_FootSubsystem = footSubsystem;
-        m_kickSubsystem = kickSubsystem;
         m_controller = controller;
-        m_kickCube = kickCube;
+        m_direction = isReversed ? -1.0 : 1.0;
         addRequirements(m_drivingSubsystem);
         addRequirements(m_FootSubsystem);
     }
@@ -60,13 +58,6 @@ public class BalanceCommand extends CommandBase {
         }
 
         m_angle = m_drivingSubsystem.getAngle();
- 
-        if (m_kickCube)
-        {
-            // kick the cube at the start of autonomous
-            m_kickSubsystem.extendKicker();
-            m_kickCube = false;
-        }
 
         if (m_delay.get() > 1){
             if (m_onRamp)
@@ -142,6 +133,7 @@ public class BalanceCommand extends CommandBase {
         }
 
         power *= m_powerScale;
+        power *= m_direction;
         System.out.println("On the ramp: Angle = " + m_angle + "Power = " + power);
         m_drivingSubsystem.drive(-power, -power, 1.0);
     }
@@ -153,8 +145,8 @@ public class BalanceCommand extends CommandBase {
             m_onRamp = true;
             return;
         }
-
-        System.out.println("On the flat" + m_flatSpeed);
-        m_drivingSubsystem.drive(-m_flatSpeed, -m_flatSpeed, 1.0);
+        double power = -m_flatSpeed * m_direction;
+        System.out.println("On the flat" + power);
+        m_drivingSubsystem.drive(power, power, 1.0);
     }
 }

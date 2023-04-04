@@ -6,6 +6,7 @@ import frc.robot.Constants;
 
 public class GripperCloseCommand extends CommandBase {
     private final GripperSubsystem m_gripperSubsystem;
+    private boolean m_isFinished = false;
     public GripperCloseCommand (GripperSubsystem gripperSubsystem) {
         m_gripperSubsystem = gripperSubsystem;
         addRequirements(m_gripperSubsystem);
@@ -18,7 +19,8 @@ public class GripperCloseCommand extends CommandBase {
      // Called every time the scheduler runs while the command is scheduled.
      @Override
      public void execute() {
-        // m_gripperSubsystem.closeGripper();
+        m_gripperSubsystem.closeGripper();
+        m_isFinished = true;
      }
  
      // Called once the command ends or is interrupted.
@@ -29,7 +31,7 @@ public class GripperCloseCommand extends CommandBase {
      // Returns true when the command should end.
      @Override
      public boolean isFinished() {
-         return false;
+         return m_isFinished;
      }
  
      @Override

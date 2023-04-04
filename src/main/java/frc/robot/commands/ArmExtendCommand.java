@@ -5,7 +5,7 @@ import frc.robot.subsystems.GripperSubsystem;
 
 public class ArmExtendCommand extends CommandBase {
     private final GripperSubsystem m_gripperSubsystem;
-
+    private boolean m_isFinished = false;
     public ArmExtendCommand(GripperSubsystem gripperSubsystem) {
         m_gripperSubsystem = gripperSubsystem;
         addRequirements(m_gripperSubsystem);
@@ -19,6 +19,7 @@ public class ArmExtendCommand extends CommandBase {
     @Override
     public void execute() {
         m_gripperSubsystem.extendArm();
+        m_isFinished = true;
     }
 
     // Called once the command ends or is interrupted.
@@ -29,7 +30,7 @@ public class ArmExtendCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return m_isFinished;
     }
 
     @Override
