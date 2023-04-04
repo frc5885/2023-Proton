@@ -38,7 +38,8 @@ public class Robot extends TimedRobot {
     //Auto commands
 
     private String m_autoSelected;
-    private final SendableChooser <String> m_chooser = new SendableChooser<>();
+    private final SendableChooser <String> m_levelChooser = new SendableChooser<>();
+    private final SendableChooser <String> m_movementChooser = new SendableChooser<>();
 
     // This function is run when the robot is first started up and should be
     // used for any initialization code.
@@ -50,13 +51,15 @@ public class Robot extends TimedRobot {
         m_robotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
 
-        m_chooser.setDefaultOption("Do Nothing", "Do Nothing");
-        m_chooser.addOption(Constants.kBalance, Constants.kBalance);
-        m_chooser.addOption(Constants.kCrossLine, Constants.kCrossLine);
-        m_chooser.addOption(Constants.kConekick, Constants.kConekick);
-        m_chooser.addOption(Constants.kLevel3, Constants.kLevel3);
-        m_chooser.addOption(Constants.kCubeCrossLine, Constants.kCubeCrossLine);
-        SmartDashboard.putData("Autonomous Command", m_chooser);
+        m_levelChooser.setDefaultOption("Do Nothing", "Do Nothing");
+        m_levelChooser.addOption(Constants.kLevel1, Constants.kLevel1);
+        m_levelChooser.addOption(Constants.kLevel2, Constants.kLevel2);
+        m_levelChooser.addOption(Constants.kLevel3, Constants.kLevel3);
+        SmartDashboard.putData("Cube Level", m_levelChooser);
+        m_movementChooser.setDefaultOption("Do Nothing", "Do Nothing");
+        m_movementChooser.addOption(Constants.kBalance, Constants.kBalance);
+        m_movementChooser.addOption(Constants.kCrossLine, Constants.kCrossLine);
+        SmartDashboard.putData("Movement", m_movementChooser);
     }
 
     /**
@@ -88,7 +91,7 @@ public class Robot extends TimedRobot {
     // This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
     @Override
     public void autonomousInit() {
-        m_autoSelected = m_chooser.getSelected();
+        m_autoSelected = m_cubechooser.getSelected();
         m_autonomousCommand = m_robotContainer.getAutonomousCommand(m_autoSelected);
 
         // schedule the autonomous command (example)

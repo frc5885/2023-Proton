@@ -58,14 +58,16 @@ public class Constants {
 
     public static final String kBalance = "Charging Station";
     public static final String kCrossLine = "Leave Community";
-    public static final String kConekick = "Kick Cone";
+    public static final String kLevel1 = "Put cube level 1";
+    public static final String kLevel2 = "Put cube level 2";
     public static final String kLevel3 = "Put cube level 3";
-    public static final String kCubeCrossLine = "Put cube level 3 and leave community";
+
 
     public static final double levelZeroTarget = 0.0;
     public static final double levelOneTarget = -42000.0;
     public static final double levelTwoTarget = -98000.0;
     public static final double levelThreeTarget = -118000.0;
+    
 
     public static final int gripperOpenButton = 2; //X Button
     public static final int gripperCloseButton = 3; //Y Button

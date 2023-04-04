@@ -3,16 +3,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.FlapSubsystem;
 
 public class MoveArmToLevelCommand extends CommandBase {
-    private final FlapSubsystem  m_flapSubsystem;
     private final ArmSubsystem m_armSubsystem;
     private final double m_targetPos;
     private final Timer m_timer = new Timer();
 
-    public MoveArmToLevelCommand(FlapSubsystem flapSubsystem, ArmSubsystem armSubsystem, double targetPos) {
-        m_flapSubsystem = flapSubsystem;
+    public MoveArmToLevelCommand(ArmSubsystem armSubsystem, double targetPos) {
         m_armSubsystem = armSubsystem;
         m_targetPos = targetPos;
         // addRequirements(m_flapSubsystem);

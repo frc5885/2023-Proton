@@ -12,6 +12,9 @@
 
 package frc.robot;
 
+import frc.ArmAutoLevelConstants;
+import frc.ArmLevelReplaceThisName;
+import frc.robot.Constants.ArmLevel;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -127,10 +130,10 @@ public class RobotContainer {
     toggleFootButton.onTrue(new FootToggleCommand(m_footSubsystem));
     balanceButton.onTrue(new BalanceCommand(m_drivingSubsystem, m_footSubsystem,
      m_xboxController1, false));
-    levelZeroButton.onTrue(new MoveArmToLevelCommand(m_flapSubsystem, m_armSubsystem, Constants.levelZeroTarget));
-    levelOneButton.onTrue(new MoveArmToLevelCommand(m_flapSubsystem, m_armSubsystem, Constants.levelOneTarget));
-    levelTwoButton.onTrue(new MoveArmToLevelCommand(m_flapSubsystem, m_armSubsystem, Constants.levelTwoTarget));
-    levelThreeButton.onTrue(new MoveArmToLevelCommand(m_flapSubsystem, m_armSubsystem, Constants.levelThreeTarget));
+    levelZeroButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelZeroTarget));
+    levelOneButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelOneTarget));
+    levelTwoButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelTwoTarget));
+    levelThreeButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelThreeTarget));
 
   }
 
@@ -139,22 +142,19 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
   */
-  public Command getAutonomousCommand(String autoSelected) {      
+  public Command getAutonomousCommand(String cubeLevelSelected, String movementSelected) {      
     // return new Level3AutoLeaveCommunityCommand(m_flapSubsystem, m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
     // return new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_gripperSubsystem,null, true);
     // The selected command will be run in autonomous
-    switch (autoSelected){
+    switch (cubeLevelSelected){
       case Constants.kBalance:
         return new 
 
       case Constants.kCrossLine:
         return new LeaveCommunityCommand(m_gripperSubsystem, true, m_drivingSubsystem);
 
-      case Constants.kConekick:
-        return new ConeKickCommand(m_gripperSubsystem, true, m_drivingSubsystem);
-
       case Constants.kLevel3:
-        return new Level3AutoCommand(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
+        return new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, ArmAutoLevelConstants.LEVEL_1);
 
       case Constants.kCubeCrossLine:
         return new Level3AutoLeaveCommunityCommand( m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
