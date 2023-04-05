@@ -15,13 +15,12 @@ package frc.robot;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
-// import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import frc.robot.ChooserConstants;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -51,14 +50,25 @@ public class Robot extends TimedRobot {
         m_robotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
 
-        m_levelChooser.setDefaultOption("Do Nothing", "Do Nothing");
-        m_levelChooser.addOption(Constants.kLevel1, Constants.kLevel1);
-        m_levelChooser.addOption(Constants.kLevel2, Constants.kLevel2);
-        m_levelChooser.addOption(Constants.kLevel3, Constants.kLevel3);
+        // Cube level
+        m_levelChooser.setDefaultOption(ChooserConstants.CubeLevelOne.m_string,
+            ChooserConstants.CubeLevelOne.m_string);
+        m_levelChooser.addOption(ChooserConstants.CubeLevelTwo.m_string,
+            ChooserConstants.CubeLevelTwo.m_string);
+        m_levelChooser.addOption(ChooserConstants.CubeLevelThree.m_string,
+            ChooserConstants.CubeLevelThree.m_string);
+
         SmartDashboard.putData("Cube Level", m_levelChooser);
+ 
+        // Movement after placing the cube
         m_movementChooser.setDefaultOption("Do Nothing", "Do Nothing");
-        m_movementChooser.addOption(Constants.kBalance, Constants.kBalance);
-        m_movementChooser.addOption(Constants.kCrossLine, Constants.kCrossLine);
+        m_movementChooser.addOption(ChooserConstants.DoNothing.m_string,
+            ChooserConstants.DoNothing.m_string);
+        m_movementChooser.addOption(ChooserConstants.LeaveCommunity.m_string,
+            ChooserConstants.LeaveCommunity.m_string);
+        m_movementChooser.addOption(ChooserConstants.Balance.m_string,
+            ChooserConstants.Balance.m_string);
+  
         SmartDashboard.putData("Movement", m_movementChooser);
     }
 
@@ -91,8 +101,41 @@ public class Robot extends TimedRobot {
     // This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
     @Override
     public void autonomousInit() {
-        m_autoSelected = m_cubechooser.getSelected();
-        m_autonomousCommand = m_robotContainer.getAutonomousCommand(m_autoSelected);
+        String levelSelected = m_levelChooser.getSelected();
+        String moveSelected = m_movementChooser.getSelected();
+        int level = 0;
+        int move = 0;
+
+        if (levelSelected == ChooserConstants.DoNothing.m_string) {
+            level = ChooserConstants.DoNothing.m_value;
+        }
+        else if (levelSelected == ChooserConstants.CubeLevelOne.m_string)
+        {
+            level = ChooserConstants.CubeLevelOne.m_value;
+        }
+        else if (levelSelected == ChooserConstants.CubeLevelTwo.m_string)
+        {
+            level = ChooserConstants.CubeLevelTwo.m_value;
+        }
+        else if (levelSelected == ChooserConstants.CubeLevelThree.m_string)
+        {
+            level = ChooserConstants.CubeLevelThree.m_value;
+        }
+
+        if (moveSelected == ChooserConstants.DoNothing.m_string) {
+            move = ChooserConstants.DoNothing.m_value;
+        }
+        else if (levelSelected == ChooserConstants.LeaveCommunity.m_string)
+        {
+            move = ChooserConstants.LeaveCommunity.m_value;
+        }
+        else if (levelSelected == ChooserConstants.Balance.m_string)
+        {
+            move = ChooserConstants.Balance.m_value;
+        }
+
+        
+        m_autonomousCommand = m_robotContainer.getAutonomousCommand(level, move);
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {

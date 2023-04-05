@@ -12,26 +12,16 @@
 
 package frc.robot;
 
-import frc.ArmAutoLevelConstants;
-import frc.ArmLevelReplaceThisName;
-import frc.robot.Constants.ArmLevel;
+
+import frc.robot.Constants.AutoMoveType;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.cameraserver.*;
-import edu.wpi.first.cscore.UsbCamera;
-import frc.robot.subsystems.*;
-import frc.robot.commands.*;
 import frc.robot.subsystems.GripperSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 
@@ -142,26 +132,55 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
   */
-  public Command getAutonomousCommand(String cubeLevelSelected, String movementSelected) {      
-    // return new Level3AutoLeaveCommunityCommand(m_flapSubsystem, m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
-    // return new BalanceCommand(m_drivingSubsystem, m_footSubsystem, m_gripperSubsystem,null, true);
-    // The selected command will be run in autonomous
-    switch (cubeLevelSelected){
-      case Constants.kBalance:
-        return new 
+  public Command getAutonomousCommand(int cubeLevelSelected, int movementSelected) { 
+    int testValue = cubeLevelSelected + movementSelected;
+    Command cmd = null;
 
-      case Constants.kCrossLine:
-        return new LeaveCommunityCommand(m_gripperSubsystem, true, m_drivingSubsystem);
-
-      case Constants.kLevel3:
-        return new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, ArmAutoLevelConstants.LEVEL_1);
-
-      case Constants.kCubeCrossLine:
-        return new Level3AutoLeaveCommunityCommand( m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem);
-
+    switch (testValue)
+    {
+      case 0: // do nothing
+        break;
+      case 1: // arm to level 1, no movement.
+        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+        ArmAutoLevelConstants.LEVEL_1, AutoMoveType.None);
+        break;
+      case 11: // arm to level 1, leave community.
+        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+        ArmAutoLevelConstants.LEVEL_1, AutoMoveType.LeaveCommunity);
+        break;
+      case 21: // arm to level 1, balance.
+        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+        ArmAutoLevelConstants.LEVEL_1, AutoMoveType.Balance);
+        break;
+      case 2: // arm to level 2, no movement.
+        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+        ArmAutoLevelConstants.LEVEL_2, AutoMoveType.None);
+        break;
+      case 12: // arm to level 2, leave community.
+        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+        ArmAutoLevelConstants.LEVEL_2, AutoMoveType.LeaveCommunity);
+        break;
+      case 22: // arm to level 2, balance.
+        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+        ArmAutoLevelConstants.LEVEL_2, AutoMoveType.Balance);
+        break;
+      case 3: // arm to level 3, no movement.
+        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+        ArmAutoLevelConstants.LEVEL_3, AutoMoveType.None);
+        break;
+      case 13: // arm to level 3, leave community.
+        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+        ArmAutoLevelConstants.LEVEL_3, AutoMoveType.LeaveCommunity);
+        break;
+      case 23: // arm to level 3, balance.
+        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+        ArmAutoLevelConstants.LEVEL_3, AutoMoveType.Balance);
+        break;
       default:
-        return null;
+        break;
+
     }
+    return cmd;
   }
   
   public void retractFoot(){

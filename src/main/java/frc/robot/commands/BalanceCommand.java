@@ -126,15 +126,28 @@ public class BalanceCommand extends CommandBase {
             return;
         }
 
+        // Get motor power from |ramp angle|
         double power = m_switchController.GetPower(Math.abs(m_angle));
 
-        if (m_angle < 0) {
-            power *= -1;
-        }
+        // Compensate for if we are going up or down the ramp
+        // If we are approaching the ramp forward, and going down the ramp
+        // m_angle < 0
+        // If we are approaching the ramp backward, and going down the ramp
+        // m_angle > 0
+        if ((m_direction == 1.0 && m_angle < 0.0) || 
+            (m_direction == -1.0 && m_angle > 0.0)) {
+            power *= -1;    // reverse the direction
+        }        
 
-        power *= m_powerScale;
+        // Compensate for if we are approaching forward (m_direction = 1) or
+        // backward (m_direction = -1)
         power *= m_direction;
+
+        // Scale the result as determined by testing
+        power *= m_powerScale;
         System.out.println("On the ramp: Angle = " + m_angle + "Power = " + power);
+
+        // power < 0 drives forward, power > 0 drives backward
         m_drivingSubsystem.drive(-power, -power, 1.0);
     }
 

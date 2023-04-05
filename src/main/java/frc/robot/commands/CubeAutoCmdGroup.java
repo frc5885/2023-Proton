@@ -1,20 +1,46 @@
 package frc.robot.commands;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DrivingSubsystem;
+import frc.robot.subsystems.FootSubsystem;
 import frc.robot.subsystems.GripperSubsystem;
-import frc.robot.subsystems.FlapSubsystem;
-import frc.robot.Constants;
 import frc.robot.ArmAutoLevelConstants;
+import frc.robot.Constants;
 
 public class CubeAutoCmdGroup extends SequentialCommandGroup {
     
-    public CubeAutoCmdGroup(ArmSubsystem armSubsystem, GripperSubsystem gripperSubsystem, DrivingSubsystem drivingSubsystem, ArmAutoLevelConstants armLevel) {
-        addCommands(new MoveArmToLevelCommand(armSubsystem, armLevel.target),
-            new DriveStraightCommand(drivingSubsystem, 0.5, armLevel.approachTime, false),
-            new GripperDropCommand(gripperSubsystem));
+    public CubeAutoCmdGroup(ArmSubsystem armSubsystem, GripperSubsystem gripperSubsystem, 
+        DrivingSubsystem drivingSubsystem, FootSubsystem footSubsystem,
+        ArmAutoLevelConstants armLevel,
+        Constants.AutoMoveType moveType) {
+        if (moveType == Constants.AutoMoveType.None) 
+        {
+            addCommands(new MoveArmToLevelCommand(armSubsystem, armLevel.target),
+                new DriveStraightCommand(drivingSubsystem, armLevel.approachSpeed, 
+                armLevel.approachTime, false),
+                new GripperDropCommand(gripperSubsystem));
+        }
+        else if (moveType == Constants.AutoMoveType.LeaveCommunity)
+        {
+            addCommands(new MoveArmToLevelCommand(armSubsystem, armLevel.target),
+                new DriveStraightCommand(drivingSubsystem, armLevel.approachSpeed, 
+                armLevel.approachTime, false),
+                new GripperDropCommand(gripperSubsystem),
+                new DriveStraightCommand(drivingSubsystem, Constants.leaveCommunitySpeed, Constants.leaveCommunityTime, 
+                true));
+        }
+        else if (moveType == Constants.AutoMoveType.Balance)
+        {
+            addCommands(new MoveArmToLevelCommand(armSubsystem, armLevel.target),
+            new DriveStraightCommand(drivingSubsystem, armLevel.approachSpeed, 
+            armLevel.approachTime, false),
+            new GripperDropCommand(gripperSubsystem),
+            new BalanceCommand(drivingSubsystem, footSubsystem, null, true));
+        }
+    
+
+
+        
     }
+
 }

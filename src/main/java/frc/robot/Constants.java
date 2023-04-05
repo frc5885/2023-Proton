@@ -67,11 +67,27 @@ public class Constants {
     public static final double levelOneTarget = -42000.0;
     public static final double levelTwoTarget = -98000.0;
     public static final double levelThreeTarget = -118000.0;
+
+    //Approach times for different cube levels in auto
+    public static final double levelOneApproachTime = 0.0;
+    public static final double levelTwoApproachTime = 0.0;
+    public static final double levelThreeApproachTime = 0.0;
     
 
     public static final int gripperOpenButton = 2; //X Button
     public static final int gripperCloseButton = 3; //Y Button
     public static final int armExtendButton = 1; //B Button
     public static final int armRetractButton = 0; // A Button
+
+    public static final double leaveCommunitySpeed = -0.75;
+    public static final double leaveCommunityTime = 5.25;
+
+    public static enum AutoMoveType
+    { 
+        None,
+        LeaveCommunity,
+        Balance
+    }
+
 }
 
