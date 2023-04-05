@@ -69,10 +69,12 @@ public class Constants {
     public static final double levelThreeTarget = -118000.0;
 
     //Approach times for different cube levels in auto
-    public static final double levelOneApproachTime = 0.0;
-    public static final double levelTwoApproachTime = 0.0;
-    public static final double levelThreeApproachTime = 0.0;
-    
+    //TODO set correct time
+    public static final double levelOneApproachTime = 1.0;
+    public static final double levelTwoApproachTime = 1.0;
+    public static final double levelThreeApproachTime = 1.0;    
+
+    public static final double approachSpeed = 0.5;
 
     public static final int gripperOpenButton = 2; //X Button
     public static final int gripperCloseButton = 3; //Y Button
@@ -80,7 +82,7 @@ public class Constants {
     public static final int armRetractButton = 0; // A Button
 
     public static final double leaveCommunitySpeed = -0.75;
-    public static final double leaveCommunityTime = 5.25;
+    public static final double leaveCommunityTime = 4.25; //decreased by second from where it moves arm down
 
     public static enum AutoMoveType
     { 

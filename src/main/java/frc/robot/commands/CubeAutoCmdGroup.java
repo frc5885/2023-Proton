@@ -15,27 +15,37 @@ public class CubeAutoCmdGroup extends SequentialCommandGroup {
         Constants.AutoMoveType moveType) {
         if (moveType == Constants.AutoMoveType.None) 
         {
-            addCommands(new MoveArmToLevelCommand(armSubsystem, armLevel.target),
-                new DriveStraightCommand(drivingSubsystem, armLevel.approachSpeed, 
-                armLevel.approachTime, false),
+            addCommands(new MoveArmToLevelCommand(armSubsystem, armLevel.m_target),
+                new DriveStraightCommand(drivingSubsystem, armLevel.m_approachSpeed, 
+                armLevel.m_approachTime, false),
                 new GripperDropCommand(gripperSubsystem));
         }
         else if (moveType == Constants.AutoMoveType.LeaveCommunity)
         {
-            addCommands(new MoveArmToLevelCommand(armSubsystem, armLevel.target),
-                new DriveStraightCommand(drivingSubsystem, armLevel.approachSpeed, 
-                armLevel.approachTime, false),
+            addCommands(new MoveArmToLevelCommand(armSubsystem, armLevel.m_target),
+                new DriveStraightCommand(drivingSubsystem, armLevel.m_approachSpeed, 
+                armLevel.m_approachTime, false),
                 new GripperDropCommand(gripperSubsystem),
+                new DwellCommand(0.5),
+                new DriveStraightCommand(drivingSubsystem, Constants.leaveCommunitySpeed, 1, true),
+                new GripperCloseCommand(gripperSubsystem),
+                new MoveArmToLevelCommand(armSubsystem, Constants.levelZeroTarget),
+                new DwellCommand(1),
                 new DriveStraightCommand(drivingSubsystem, Constants.leaveCommunitySpeed, Constants.leaveCommunityTime, 
                 true));
         }
         else if (moveType == Constants.AutoMoveType.Balance)
         {
-            addCommands(new MoveArmToLevelCommand(armSubsystem, armLevel.target),
-            new DriveStraightCommand(drivingSubsystem, armLevel.approachSpeed, 
-            armLevel.approachTime, false),
-            new GripperDropCommand(gripperSubsystem),
-            new BalanceCommand(drivingSubsystem, footSubsystem, null, true));
+            addCommands(new MoveArmToLevelCommand(armSubsystem, armLevel.m_target),
+                new DriveStraightCommand(drivingSubsystem, armLevel.m_approachSpeed, 
+                armLevel.m_approachTime, false),
+                new GripperDropCommand(gripperSubsystem),
+                new DwellCommand(0.5),
+                new DriveStraightCommand(drivingSubsystem, Constants.leaveCommunitySpeed, 1, true),
+                new GripperCloseCommand(gripperSubsystem),
+                new MoveArmToLevelCommand(armSubsystem, Constants.levelZeroTarget),
+                new DwellCommand(1),
+                new BalanceCommand(drivingSubsystem, footSubsystem, null, true));
         }
     
 
