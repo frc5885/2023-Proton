@@ -29,14 +29,10 @@ import frc.robot.ChooserConstants;
  * the project.
  */
 public class Robot extends TimedRobot {
-
     private Command m_autonomousCommand;
-
     private RobotContainer m_robotContainer;
 
     //Auto commands
-
-    private String m_autoSelected;
     private final SendableChooser <String> m_levelChooser = new SendableChooser<>();
     private final SendableChooser <String> m_movementChooser = new SendableChooser<>();
 
@@ -44,9 +40,13 @@ public class Robot extends TimedRobot {
     // used for any initialization code.
     @Override
     public void robotInit() {
+        // Set gripper state
+        m_robotContainer.closeGripper();
+        m_robotContainer.retractArm();
+        
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-        
+      
         m_robotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
 
@@ -95,7 +95,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        m_robotContainer.extendFoot();  
     }
 
     // This autonomous runs the autonomous command selected by your {@link RobotContainer} class.

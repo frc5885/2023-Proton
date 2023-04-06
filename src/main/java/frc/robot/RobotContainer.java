@@ -90,11 +90,6 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Controller 2
-    Trigger armRetractButton = new JoystickButton(m_xboxController2, XboxController.Button.kA.value);
-    Trigger armExtendButton = new JoystickButton(m_xboxController2, XboxController.Button.kB.value);
-    Trigger gripperCloseButton = new JoystickButton(m_xboxController2, XboxController.Button.kX.value);
-    Trigger gripperOpenButton = new JoystickButton(m_xboxController2, XboxController.Button.kY.value);
-
     Trigger gripperToggleButton = new JoystickButton(m_xboxController2, XboxController.Button.kRightBumper.value);
 
     Trigger levelZeroButton = new JoystickButton(m_xboxController2, XboxController.Button.kA.value);
@@ -106,11 +101,6 @@ public class RobotContainer {
     Trigger toggleFootButton = new JoystickButton(m_xboxController1, XboxController.Button.kStart.value);
     Trigger balanceButton = new JoystickButton(m_xboxController1, XboxController.Button.kB.value);
     Trigger flapButton = new JoystickButton(m_xboxController1, XboxController.Button.kLeftBumper.value);
-
-    // armRetractButton.onTrue(new ArmRetractCommand(m_gripperSubsystem));
-    // armExtendButton.onTrue(new ArmExtendCommand(m_gripperSubsystem));
-    // gripperCloseButton.onTrue(new GripperCloseCommand(m_gripperSubsystem));
-    // gripperOpenButton.onTrue(new GripperOpenCommand(m_gripperSubsystem));
 
     gripperToggleButton.onTrue(new GripperDropCommand(m_gripperSubsystem));
     gripperToggleButton.onFalse(new GripperPickUpCmdGroup(m_gripperSubsystem));
@@ -124,7 +114,6 @@ public class RobotContainer {
     levelOneButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelOneTarget));
     levelTwoButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelTwoTarget));
     levelThreeButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelThreeTarget));
-
   }
 
   /**
@@ -180,14 +169,19 @@ public class RobotContainer {
         break;
 
     }
+
     return cmd;
   }
   
   public void retractFoot(){
     m_footSubsystem.retractFoot();
-  } 
+  }
+  
+  public void retractArm() {
+    m_gripperSubsystem.retractArm();
+  }
 
-  public void extendFoot(){
-    //m_footSubsystem.retractFoot();
+  public void closeGripper() {
+    m_gripperSubsystem.closeGripper();
   }
 }
