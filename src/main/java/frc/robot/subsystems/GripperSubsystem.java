@@ -60,6 +60,7 @@ public class GripperSubsystem extends SubsystemBase {
         //Gripper isn't closed
         if(gripSolenoid.get() != Value.kReverse){
             gripSolenoid.set(Value.kReverse);
+            System.out.println("&&& gripper closed &&&");
         }
     }
 
@@ -67,6 +68,7 @@ public class GripperSubsystem extends SubsystemBase {
         //Gripper isn't closed
         if(gripSolenoid.get() != Value.kForward){
             gripSolenoid.set(Value.kForward);
+            System.out.println("&&& gripper opened &&&");
         }
     }
 
