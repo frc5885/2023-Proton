@@ -52,7 +52,6 @@ public class Constants {
     public static final int armEncoderPIDLoopIndex = 0;
     public static final int armEncoderTimeoutMs = 30;
     public static final int armEncoderCountsPerInch = 123345; // todo - set this properly
-
     
     public static final double armSpeedFactor = 1;
 
@@ -76,11 +75,11 @@ public class Constants {
 
     public static final double approachSpeed = 0.5;
 
-    public static final int gripperOpenButton = 2; //X Button
-    public static final int gripperCloseButton = 3; //Y Button
-    public static final int armExtendButton = 1; //B Button
-    public static final int armRetractButton = 0; // A Button
-
+    public static final int gripperOpenButton = 2;  // X Button
+    public static final int gripperCloseButton = 3; // Y Button
+    public static final int armExtendButton = 1;    // B Button
+    public static final int armRetractButton = 0;   // A Button
+    public static final double gripperDwellTime = .25;  // seconds
     public static final double leaveCommunitySpeed = -0.75;
     public static final double leaveCommunityTime = 4.25; //decreased by second from where it moves arm down
 

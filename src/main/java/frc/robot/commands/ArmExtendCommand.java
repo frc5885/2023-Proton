@@ -1,11 +1,15 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.GripperSubsystem;
 
 public class ArmExtendCommand extends CommandBase {
     private final GripperSubsystem m_gripperSubsystem;
-    private boolean m_isFinished = false;
+    private Timer m_timer = new Timer();
+    private boolean m_timerStarted = false;
+
     public ArmExtendCommand(GripperSubsystem gripperSubsystem) {
         m_gripperSubsystem = gripperSubsystem;
         addRequirements(m_gripperSubsystem);
@@ -13,13 +17,18 @@ public class ArmExtendCommand extends CommandBase {
 
     @Override
     public void initialize() {
+        m_timer.reset();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         m_gripperSubsystem.extendArm();
-        m_isFinished = true;
+
+        if (!m_timerStarted) {
+            m_timer.start();
+            m_timerStarted = true;
+        }
     }
 
     // Called once the command ends or is interrupted.
@@ -30,7 +39,13 @@ public class ArmExtendCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return m_isFinished;
+        boolean finished = m_timer.get() > Constants.gripperDwellTime;
+
+        if (finished) {
+            System.out.println("\n\n\n$$$$$ Arm extend finished $$$$$\n\n\n");
+        }
+
+        return finished;
     }
 
     @Override

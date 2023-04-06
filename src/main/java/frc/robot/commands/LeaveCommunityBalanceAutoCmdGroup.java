@@ -1,14 +1,9 @@
 package frc.robot.commands;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DrivingSubsystem;
 import frc.robot.subsystems.FlapSubsystem;
 import frc.robot.subsystems.FootSubsystem;
 import frc.robot.subsystems.GripperSubsystem;
-import frc.robot.SwitchController;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 

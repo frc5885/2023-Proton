@@ -112,16 +112,14 @@ public class RobotContainer {
     // gripperCloseButton.onTrue(new GripperCloseCommand(m_gripperSubsystem));
     // gripperOpenButton.onTrue(new GripperOpenCommand(m_gripperSubsystem));
 
-    //rwhgripperToggleButton.onTrue(new GripperDropCommand(m_gripperSubsystem));
-    //rwhgripperToggleButton.onFalse(new GripperPickUpCmdGroup(m_gripperSubsystem));
     gripperToggleButton.onTrue(new GripperDropCommand(m_gripperSubsystem));
-    gripperToggleButton.onFalse(new GripperPickUpCommand(m_gripperSubsystem));
-
+    gripperToggleButton.onFalse(new GripperPickUpCmdGroup(m_gripperSubsystem));
+    
     flapButton.onTrue(new FlapCommand(m_flapSubsystem));
 
     toggleFootButton.onTrue(new FootToggleCommand(m_footSubsystem));
     balanceButton.onTrue(new BalanceCommand(m_drivingSubsystem, m_footSubsystem,
-     m_xboxController1, false));
+      m_xboxController1, false));
     levelZeroButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelZeroTarget));
     levelOneButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelOneTarget));
     levelTwoButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelTwoTarget));
