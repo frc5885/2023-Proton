@@ -44,7 +44,7 @@ public class CubeAutoCmdGroup extends SequentialCommandGroup {
                 new DriveStraightCommand(drivingSubsystem, Constants.leaveCommunitySpeed, 1, true),
                 new GripperCloseCommand(gripperSubsystem),
                 new MoveArmToLevelCommand(armSubsystem, Constants.levelZeroTarget),
-                new DwellCommand(1),
+                //rwh new DwellCommand(1),
                 new BalanceCommand(drivingSubsystem, footSubsystem, null, true));
         }
     

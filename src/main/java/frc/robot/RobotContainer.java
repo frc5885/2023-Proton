@@ -33,7 +33,7 @@ import frc.robot.subsystems.ArmSubsystem;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-
+//  private SendableChooser <String> m_movementChooser = new SendableChooser<>();
   private static RobotContainer m_robotContainer = new RobotContainer();
 
   // The robot's subsystems
@@ -55,6 +55,7 @@ public class RobotContainer {
   */
   private RobotContainer() {
     // m_usbCamera = CameraServer.startAutomaticCapture();
+
     // Configure the button bindings
     configureButtonBindings();
 
@@ -103,6 +104,22 @@ public class RobotContainer {
     levelThreeButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelThreeTarget));
   }
 
+  void configureSmartDashboard() {
+    // Movement after placing the cube
+
+    // !!!!!! SET MOVEMENT OPTION FOR AUTO HERE !!!!!
+    // Options are: DoNothing, LeaveCommunity and Balance
+    // m_movementChooser.setDefaultOption(ChooserConstants.DoNothing.m_string,
+    //     ChooserConstants.DoNothing.m_string);
+    // //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    // m_movementChooser.addOption(ChooserConstants.LeaveCommunity.m_string,
+    //     ChooserConstants.LeaveCommunity.m_string);
+    // m_movementChooser.addOption(ChooserConstants.Balance.m_string,
+    //     ChooserConstants.Balance.m_string);
+
+    // SmartDashboard.putData("Movement", m_movementChooser);
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -110,21 +127,27 @@ public class RobotContainer {
   */
   public Command getAutonomousCommand(String movementStr) { 
     Command cmd = null;
-
-    if (movementStr == ChooserConstants.LeaveCommunity.m_string) {
-      cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem,
-       m_footSubsystem, ArmAutoLevelConstants.LEVEL_3, AutoMoveType.LeaveCommunity);
-
-    }
-    else if (movementStr == ChooserConstants.Balance.m_string) {
-      cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem,
+    cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem,
         m_footSubsystem, ArmAutoLevelConstants.LEVEL_3, AutoMoveType.Balance);
 
-    }
-    else {  // drop the cube and do nothing else
-        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem,
-          m_footSubsystem, ArmAutoLevelConstants.LEVEL_3, AutoMoveType.None);
-    }
+    // if (movementStr == ChooserConstants.LeaveCommunity.m_string) {
+    //   cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem,
+    //    m_footSubsystem, ArmAutoLevelConstants.LEVEL_3, AutoMoveType.LeaveCommunity);
+
+    // }
+    // else if (movementStr == ChooserConstants.Balance.m_string) {
+    //   cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem,
+    //     m_footSubsystem, ArmAutoLevelConstants.LEVEL_3, AutoMoveType.Balance);
+
+    // }
+    // else {  // drop the cube and do nothing else
+    //     cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem,
+    //       m_footSubsystem, ArmAutoLevelConstants.LEVEL_3, AutoMoveType.None);
+    // }
+
+
+
+
 
 //    int testValue = cubeLevelSelected + movementSelected;
     // switch (testValue)

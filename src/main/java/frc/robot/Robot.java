@@ -64,14 +64,14 @@ public class Robot extends TimedRobot {
 
         // !!!!!! SET MOVEMENT OPTION FOR AUTO HERE !!!!!
         // Options are: DoNothing, LeaveCommunity and Balance
-        m_movementChooser.setDefaultOption(ChooserConstants.DoNothing.m_string,
+        m_movementChooser.setDefaultOption(ChooserConstants.LeaveCommunity.m_string,
             ChooserConstants.DoNothing.m_string);
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        m_movementChooser.addOption(ChooserConstants.LeaveCommunity.m_string,
-            ChooserConstants.LeaveCommunity.m_string);
-        m_movementChooser.addOption(ChooserConstants.Balance.m_string,
-            ChooserConstants.Balance.m_string);
+        // m_movementChooser.addOption(ChooserConstants.LeaveCommunity.m_string,
+        //     ChooserConstants.LeaveCommunity.m_string);
+        // m_movementChooser.addOption(ChooserConstants.Balance.m_string,
+        //     ChooserConstants.Balance.m_string);
   
         SmartDashboard.putData("Movement", m_movementChooser);
 //        SmartDashboard.putData(levelStr, m_levelChooser);
@@ -106,6 +106,7 @@ public class Robot extends TimedRobot {
     // This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
     @Override
     public void autonomousInit() {
+        m_robotContainer.m_gripperSubsystem.disableCompressor();
         //rwh ALWAYS doing cube level 3
         String levelSelected = ChooserConstants.CubeLevelThree.m_string;  //rwhm_levelChooser.getSelected();
         String moveSelected = m_movementChooser.getSelected();
@@ -158,6 +159,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        m_robotContainer.m_gripperSubsystem.enableCompressor();
+
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove

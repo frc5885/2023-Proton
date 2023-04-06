@@ -20,7 +20,7 @@ public class GripperSubsystem extends SubsystemBase {
         gripSolenoid = new DoubleSolenoid(Constants.PneumaticsID, PneumaticsModuleType.CTREPCM, 0, 1);
         addChild("ArmSolenoid", gripSolenoid);
     
-        compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
+        compressor = new Compressor(Constants.PneumaticsID, PneumaticsModuleType.CTREPCM);
         addChild("Compressor",compressor);
     }
 
@@ -82,5 +82,11 @@ public class GripperSubsystem extends SubsystemBase {
         extendArm();
     }
 
+    public void disableCompressor() {
+        compressor.disable();
+    }
 
+    public void enableCompressor() {
+        compressor.enableDigital();
+    }
 }
