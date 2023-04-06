@@ -50,32 +50,18 @@ public class RobotContainer {
   private final XboxController m_xboxController1 = new XboxController(0);
   private final XboxController m_xboxController2 = new XboxController(1);
   
-  // A chooser for autonomous commands
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
-
   /**
   * The container for the robot.  Contains subsystems, OI devices, and commands.
   */
   private RobotContainer() {
-
     // m_usbCamera = CameraServer.startAutomaticCapture();
     // Configure the button bindings
     configureButtonBindings();
 
     m_drivingSubsystem.setDefaultCommand(new TeleopDriveCommand (m_flapSubsystem, 
       m_drivingSubsystem, m_xboxController1));
-    m_gripperSubsystem.setDefaultCommand(new GripperOpenCommand(m_gripperSubsystem));
     m_armSubsystem.setDefaultCommand(new MoveArmCommand(m_flapSubsystem,
       m_armSubsystem, m_xboxController2));
-    // m_armSubsystem.setDefaultCommand(new ArmExtendCommand(m_gripperSubsystem));
-    // m_footSubsystem.setDefaultCommand(new FootToggleCommand(m_footSubsystem));
-
-    // SmartDashboard Buttons
-   // SmartDashboard.putData("Autonomous Command", new TankTurnCommand(m_drivingSubsystem));
-
-   // m_chooser.setDefaultOption("Autonomous Command", new TankTurnCommand(m_drivingSubsystem));
-
-    SmartDashboard.putData("Auto Mode", m_chooser);
   }
 
   public static RobotContainer getInstance() {
@@ -90,11 +76,6 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Controller 2
-    Trigger armRetractButton = new JoystickButton(m_xboxController2, XboxController.Button.kA.value);
-    Trigger armExtendButton = new JoystickButton(m_xboxController2, XboxController.Button.kB.value);
-    Trigger gripperCloseButton = new JoystickButton(m_xboxController2, XboxController.Button.kX.value);
-    Trigger gripperOpenButton = new JoystickButton(m_xboxController2, XboxController.Button.kY.value);
-
     Trigger gripperToggleButton = new JoystickButton(m_xboxController2, XboxController.Button.kRightBumper.value);
 
     Trigger levelZeroButton = new JoystickButton(m_xboxController2, XboxController.Button.kA.value);
@@ -107,24 +88,19 @@ public class RobotContainer {
     Trigger balanceButton = new JoystickButton(m_xboxController1, XboxController.Button.kB.value);
     Trigger flapButton = new JoystickButton(m_xboxController1, XboxController.Button.kLeftBumper.value);
 
-    // armRetractButton.onTrue(new ArmRetractCommand(m_gripperSubsystem));
-    // armExtendButton.onTrue(new ArmExtendCommand(m_gripperSubsystem));
-    // gripperCloseButton.onTrue(new GripperCloseCommand(m_gripperSubsystem));
-    // gripperOpenButton.onTrue(new GripperOpenCommand(m_gripperSubsystem));
-
     gripperToggleButton.onTrue(new GripperDropCommand(m_gripperSubsystem));
     gripperToggleButton.onFalse(new GripperPickUpCmdGroup(m_gripperSubsystem));
     
     flapButton.onTrue(new FlapCommand(m_flapSubsystem));
-
     toggleFootButton.onTrue(new FootToggleCommand(m_footSubsystem));
+
     balanceButton.onTrue(new BalanceCommand(m_drivingSubsystem, m_footSubsystem,
       m_xboxController1, false));
+
     levelZeroButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelZeroTarget));
     levelOneButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelOneTarget));
     levelTwoButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelTwoTarget));
     levelThreeButton.onTrue(new MoveArmToLevelCommand(m_armSubsystem, Constants.levelThreeTarget));
-
   }
 
   /**
@@ -132,54 +108,69 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
   */
-  public Command getAutonomousCommand(int cubeLevelSelected, int movementSelected) { 
-    int testValue = cubeLevelSelected + movementSelected;
+  public Command getAutonomousCommand(String movementStr) { 
     Command cmd = null;
 
-    switch (testValue)
-    {
-      case 0: // do nothing
-        break;
-      case 1: // arm to level 1, no movement.
-        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
-        ArmAutoLevelConstants.LEVEL_1, AutoMoveType.None);
-        break;
-      case 11: // arm to level 1, leave community.
-        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
-        ArmAutoLevelConstants.LEVEL_1, AutoMoveType.LeaveCommunity);
-        break;
-      case 21: // arm to level 1, balance.
-        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
-        ArmAutoLevelConstants.LEVEL_1, AutoMoveType.Balance);
-        break;
-      case 2: // arm to level 2, no movement.
-        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
-        ArmAutoLevelConstants.LEVEL_2, AutoMoveType.None);
-        break;
-      case 12: // arm to level 2, leave community.
-        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
-        ArmAutoLevelConstants.LEVEL_2, AutoMoveType.LeaveCommunity);
-        break;
-      case 22: // arm to level 2, balance.
-        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
-        ArmAutoLevelConstants.LEVEL_2, AutoMoveType.Balance);
-        break;
-      case 3: // arm to level 3, no movement.
-        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
-        ArmAutoLevelConstants.LEVEL_3, AutoMoveType.None);
-        break;
-      case 13: // arm to level 3, leave community.
-        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
-        ArmAutoLevelConstants.LEVEL_3, AutoMoveType.LeaveCommunity);
-        break;
-      case 23: // arm to level 3, balance.
-        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
-        ArmAutoLevelConstants.LEVEL_3, AutoMoveType.Balance);
-        break;
-      default:
-        break;
+    if (movementStr == ChooserConstants.LeaveCommunity.m_string) {
+      cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem,
+       m_footSubsystem, ArmAutoLevelConstants.LEVEL_3, AutoMoveType.LeaveCommunity);
 
     }
+    else if (movementStr == ChooserConstants.Balance.m_string) {
+      cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem,
+        m_footSubsystem, ArmAutoLevelConstants.LEVEL_3, AutoMoveType.Balance);
+
+    }
+    else {  // drop the cube and do nothing else
+        cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem,
+          m_footSubsystem, ArmAutoLevelConstants.LEVEL_3, AutoMoveType.None);
+    }
+
+//    int testValue = cubeLevelSelected + movementSelected;
+    // switch (testValue)
+    // {
+    //   case 0: // do nothing
+    //     break;
+    //   case 1: // arm to level 1, no movement.
+    //     cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+    //     ArmAutoLevelConstants.LEVEL_1, AutoMoveType.None);
+    //     break;
+    //   case 11: // arm to level 1, leave community.
+    //     cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+    //     ArmAutoLevelConstants.LEVEL_1, AutoMoveType.LeaveCommunity);
+    //     break;
+    //   case 21: // arm to level 1, balance.
+    //     cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+    //     ArmAutoLevelConstants.LEVEL_1, AutoMoveType.Balance);
+    //     break;
+    //   case 2: // arm to level 2, no movement.
+    //     cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+    //     ArmAutoLevelConstants.LEVEL_2, AutoMoveType.None);
+    //     break;
+    //   case 12: // arm to level 2, leave community.
+    //     cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+    //     ArmAutoLevelConstants.LEVEL_2, AutoMoveType.LeaveCommunity);
+    //     break;
+    //   case 22: // arm to level 2, balance.
+    //     cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+    //     ArmAutoLevelConstants.LEVEL_2, AutoMoveType.Balance);
+    //     break;
+    //   case 3: // arm to level 3, no movement.
+    //     cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+    //     ArmAutoLevelConstants.LEVEL_3, AutoMoveType.None);
+    //     break;
+    //   case 13: // arm to level 3, leave community.
+    //     cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+    //     ArmAutoLevelConstants.LEVEL_3, AutoMoveType.LeaveCommunity);
+    //     break;
+    //   case 23: // arm to level 3, balance.
+    //     cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem, m_footSubsystem, 
+    //     ArmAutoLevelConstants.LEVEL_3, AutoMoveType.Balance);
+    //     break;
+    //   default:
+    //     break;
+    // }
+
     return cmd;
   }
   

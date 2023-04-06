@@ -70,7 +70,7 @@ public class Level3AutoLeaveCommunityCommand extends CommandBase {
             }
             else{
                 m_drivingSubsystem.drive(0, 0, 1);
-                m_gripperSubsystem.openGripper();
+                //rwh m_gripperSubsystem.openGripper();
             }
         }
         else if (m_timer.get() > 9.5 && m_timer.get() < 13.75){

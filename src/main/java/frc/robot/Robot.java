@@ -36,9 +36,8 @@ public class Robot extends TimedRobot {
 
     //Auto commands
 
-    private String m_autoSelected;
-    private final SendableChooser <String> m_levelChooser = new SendableChooser<>();
-    private final SendableChooser <String> m_movementChooser = new SendableChooser<>();
+    private SendableChooser <String> m_levelChooser;
+    private SendableChooser <String> m_movementChooser;
 
     // This function is run when the robot is first started up and should be
     // used for any initialization code.
@@ -46,30 +45,36 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-        
+
         m_robotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
 
         // Cube level
-        m_levelChooser.setDefaultOption(ChooserConstants.CubeLevelOne.m_string,
-            ChooserConstants.CubeLevelOne.m_string);
-        m_levelChooser.addOption(ChooserConstants.CubeLevelTwo.m_string,
-            ChooserConstants.CubeLevelTwo.m_string);
-        m_levelChooser.addOption(ChooserConstants.CubeLevelThree.m_string,
-            ChooserConstants.CubeLevelThree.m_string);
-
-        SmartDashboard.putData("Cube Level", m_levelChooser);
+        // m_levelChooser = new SendableChooser<>();
+        // m_levelChooser.setDefaultOption(ChooserConstants.CubeLevelOne.m_string,
+        //     ChooserConstants.CubeLevelOne.m_string);
+        // m_levelChooser.addOption(ChooserConstants.CubeLevelTwo.m_string,
+        //     ChooserConstants.CubeLevelTwo.m_string);
+        // m_levelChooser.addOption(ChooserConstants.CubeLevelThree.m_string,
+        //     ChooserConstants.CubeLevelThree.m_string);
+        // String levelStr = new String("level");
  
         // Movement after placing the cube
-        m_movementChooser.setDefaultOption("Do Nothing", "Do Nothing");
-        m_movementChooser.addOption(ChooserConstants.DoNothing.m_string,
+        m_movementChooser = new SendableChooser<>();
+
+        // !!!!!! SET MOVEMENT OPTION FOR AUTO HERE !!!!!
+        // Options are: DoNothing, LeaveCommunity and Balance
+        m_movementChooser.setDefaultOption(ChooserConstants.DoNothing.m_string,
             ChooserConstants.DoNothing.m_string);
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         m_movementChooser.addOption(ChooserConstants.LeaveCommunity.m_string,
             ChooserConstants.LeaveCommunity.m_string);
         m_movementChooser.addOption(ChooserConstants.Balance.m_string,
             ChooserConstants.Balance.m_string);
   
         SmartDashboard.putData("Movement", m_movementChooser);
+//        SmartDashboard.putData(levelStr, m_levelChooser);
     }
 
     /**
@@ -101,7 +106,8 @@ public class Robot extends TimedRobot {
     // This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
     @Override
     public void autonomousInit() {
-        String levelSelected = m_levelChooser.getSelected();
+        //rwh ALWAYS doing cube level 3
+        String levelSelected = ChooserConstants.CubeLevelThree.m_string;  //rwhm_levelChooser.getSelected();
         String moveSelected = m_movementChooser.getSelected();
         int level = 0;
         int move = 0;
@@ -135,7 +141,8 @@ public class Robot extends TimedRobot {
         }
 
         
-        m_autonomousCommand = m_robotContainer.getAutonomousCommand(level, move);
+        m_autonomousCommand = m_robotContainer.getAutonomousCommand(
+            m_movementChooser.getSelected());
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {

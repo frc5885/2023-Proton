@@ -6,9 +6,9 @@ public class GripperPickUpCmdGroup extends SequentialCommandGroup {
 
     public GripperPickUpCmdGroup(GripperSubsystem gripperSubsystem){
         addCommands(new ArmExtendCommand(gripperSubsystem),
-            new DwellCommand(1),
+            new DwellCommand(.25),
             new GripperCloseCommand(gripperSubsystem),
-            new DwellCommand(1),
+            new DwellCommand(.02),
             new ArmRetractCommand(gripperSubsystem));
     }
 }
