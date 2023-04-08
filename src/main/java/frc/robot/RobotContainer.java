@@ -128,7 +128,7 @@ public class RobotContainer {
   public Command getAutonomousCommand(String movementStr) { 
     Command cmd = null;
     cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem,
-        m_footSubsystem, ArmAutoLevelConstants.LEVEL_3, AutoMoveType.Balance);
+        m_footSubsystem, ArmAutoLevelConstants.LEVEL_3, AutoMoveType.LeaveCommunity, m_flapSubsystem);
 
     // if (movementStr == ChooserConstants.LeaveCommunity.m_string) {
     //   cmd = new CubeAutoCmdGroup(m_armSubsystem, m_gripperSubsystem, m_drivingSubsystem,

@@ -2,6 +2,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DrivingSubsystem;
+import frc.robot.subsystems.FlapSubsystem;
 import frc.robot.subsystems.FootSubsystem;
 import frc.robot.subsystems.GripperSubsystem;
 import frc.robot.ArmAutoLevelConstants;
@@ -12,7 +13,8 @@ public class CubeAutoCmdGroup extends SequentialCommandGroup {
     public CubeAutoCmdGroup(ArmSubsystem armSubsystem, GripperSubsystem gripperSubsystem, 
         DrivingSubsystem drivingSubsystem, FootSubsystem footSubsystem,
         ArmAutoLevelConstants armLevel,
-        Constants.AutoMoveType moveType) {
+        Constants.AutoMoveType moveType,
+        FlapSubsystem flapSubsystem) {
         if (moveType == Constants.AutoMoveType.None) 
         {
             addCommands(new MoveArmToLevelCommand(armSubsystem, armLevel.m_target),
@@ -32,7 +34,13 @@ public class CubeAutoCmdGroup extends SequentialCommandGroup {
                 new MoveArmToLevelCommand(armSubsystem, Constants.levelZeroTarget),
                 new DwellCommand(1),
                 new DriveStraightCommand(drivingSubsystem, Constants.leaveCommunitySpeed, Constants.leaveCommunityTime, 
-                true));
+                true),
+                new TankTurnCommand(drivingSubsystem, 180)//,
+                // new FlapCommand(flapSubsystem),
+                // new GripperOpenCommand(gripperSubsystem),
+                // new ArmRetractCommand(gripperSubsystem),
+                // new DriveStraightCommand(drivingSubsystem, 0.4, 1.3, false)
+                );
         }
         else if (moveType == Constants.AutoMoveType.Balance)
         {

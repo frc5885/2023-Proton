@@ -81,7 +81,7 @@ public class Constants {
     public static final int armRetractButton = 0;   // A Button
     public static final double gripperDwellTime = .25;  // seconds
     public static final double leaveCommunitySpeed = 0.75;
-    public static final double leaveCommunityTime = 2.25; //decreased by 2 seconds from where it moves arm down
+    public static final double leaveCommunityTime = 2.75; //decreased by 2 seconds from where it moves arm down //was 2.25
 
     public static enum AutoMoveType
     { 

@@ -20,9 +20,11 @@ public class SwitchController {
         m_points.add(new ControllerPoint(10.0, 0.55));
         m_points.add(new ControllerPoint(11.0, 0.57));
         m_points.add(new ControllerPoint(12.0, 0.58));
-        m_points.add(new ControllerPoint(13.0, 0.59));
-        m_points.add(new ControllerPoint(14.0, 0.6));
-        m_points.add(new ControllerPoint(15.0, 0.63));
+        m_points.add(new ControllerPoint(13.0, 0.6));
+        m_points.add(new ControllerPoint(14.0, 0.62));
+        m_points.add(new ControllerPoint(15.0, 0.65));//0.63));
+        m_points.add(new ControllerPoint(16.0, 0.7));
+        m_points.add(new ControllerPoint(17.0, 0.8));
     };
 
     public double GetPower(double angle) {

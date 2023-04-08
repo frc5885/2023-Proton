@@ -17,7 +17,7 @@ public class BalanceCommand extends CommandBase {
     // Does the power calculation for a given ramp angle
     private final SwitchController m_switchController = new SwitchController();
     private final double m_rampAngle = 15.0;
-    private final double m_flatSpeed = 0.9; //was .85
+    private final double m_flatSpeed = 0.85; //was .85
     private final double m_powerScale = 1.05;  // scale output up/down quickly //was 1.02   
     private boolean m_isCancelled = false;
     private double m_angle = 0.0;
@@ -59,7 +59,7 @@ public class BalanceCommand extends CommandBase {
 
         m_angle = m_drivingSubsystem.getAngle();
 
-        if (m_delay.get() > 1){
+        if (m_delay.get() > .1){
             if (m_onRamp)
             {
                 // Controller for balancing on the charger
